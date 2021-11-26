@@ -1,0 +1,231 @@
+\documentclass[8pt]{beamer} %[handout]
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mwe}
+\usepackage{listings}
+\usepackage{multicol}
+% \usepackage{beton}
+% \usepackage{euler}
+% \usepackage{fontspec}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\setlength{\marginparwidth}{1.5cm}
+\usepackage{verbatim}
+\usepackage{todonotes}
+
+\usepackage[backend=biber]{biblatex}
+\usepackage{csquotes}
+\addbibresource{./presentazione.bib}
+\usepackage[makeroom]{cancel}
+
+\title{Generalizzazione del modello NLIN per sistemi WDM con guadagno di Raman e attenuazione variabili\\ \vspace{10pt} \small{Step 3: generalization of $X_{0, m, m}$ nel caso di impulsi gaussiani}}
+\author{Francesco Lorenzi}
+\date{Ottobre-Novembre 2021}
+\institute[Università degli studi di Padova \\ Dipartimento di ingegneria dell'informazione]{}
+
+\titlegraphic{\includegraphics[width=0.15\textwidth]{../images/logo/unipd-text.png} \hspace{1cm} \includegraphics[width=0.15\textwidth]{../images/logo/DEI-text.png}}
+
+\usetheme{Berlin}
+\usecolortheme{beaver}
+% \usefonttheme{structuresmallcapsserif}
+\usepackage{textpos}
+%\addtobeamertemplate{frametitle}{}{%
+%\begin{textblock*}{100mm}(.85\textwidth,-1.1cm)
+%\hspace{1cm}\includegraphics[width = 0.2cm]{../images/logo/DEI.png}
+%\end{textblock*}}
+\usefonttheme{professionalfonts} % using non standard fonts for beamer
+\usefonttheme{serif} % default family is serif
+% remove navigation symbols from beamer theme
+\beamertemplatenavigationsymbolsempty
+
+\addtobeamertemplate{navigation symbols}{}{
+  \usebeamerfont{footline}
+  \usebeamercolor[fg]{footline} 
+  \hspace{1em}
+  \insertframenumber/\inserttotalframenumber
+}
+
+\setbeamertemplate{footline}{}
+%\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+  
+\begin{document}
+
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+  \insertshorttitle\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+\begin{frame}
+	\maketitle
+\end{frame}
+\section{Impulsi gaussiani}
+\begin{frame}
+	\frametitle{Impulsi gaussiani}
+	Si suppongano impulsi gaussiani: l'effetto della propagazione lineare è esprimibile in forma chiusa come
+	\begin{equation}\label{eq:field}
+		g(z, t) = \frac{U_0 \exp[\frac{i}{2} \arctan(D(z))]}{(1+D^2(z))^{1/4}} \exp\left[-\frac{t^2}{2T_0^2} \frac{1+iD(z)}{1+D^2(z)}\right]
+	\end{equation}
+	dove $D(z) = z\beta_2 / T_0^2$.
+	\vspace{10pt}
+	
+	Assumendo la normalizzazione dell'energia dell'impulso a 1, i parametri di ampiezza e larghezza devono soddisfare
+	\begin{equation}\label{eq:norm}
+		U_0^2T_0 \sqrt{\pi} = 1
+	\end{equation}
+	Usando questa scrittura dell'impulso, si sostituisce nella scrittura del coefficiente di XPM.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Sostituzione}
+	\begin{equation}
+		X_{0, m, m} = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}dt |g^{(0)}(z, t)|^2 |g^{(0)}(z, t- m T-\beta_2\Omega z)|^2
+	\end{equation}
+	quindi considerando 
+	\begin{equation*}
+		|g^{(0)}(z, t)|^2 = \dfrac{U_0^2}{(1+D^2(z))^{1/2}}\exp\left[-\dfrac{t^2}{T_0^2} \dfrac{1}{1+D^2(z)}\right] 
+	\end{equation*}
+	si ha la seguente espressione
+	\begin{align*}
+		X_{0, m, m} &= \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}dt  
+		\dfrac{U_0^4}{1+D^2(z)} \cdot \\ \cdot  &\exp\left[-\dfrac{1}{T_0^2(1+D^2(z))} 
+		\underbracket{\left(t^2 + (t-mT-\beta_2\Omega z)^2\right)}_{\varphi}\right]
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Completamento del quadrato}
+	Per comodità di scrittura, definiamo $s$ come
+	\begin{equation*}
+		s := mT+\beta_2\Omega z
+	\end{equation*}
+	allora è possibile riscrivere $\varphi$ come
+	\begin{align*}
+		\varphi &= 2t^2 - 2ts + s^2 \\
+		&= \left(\sqrt{2}t - \dfrac{s}{\sqrt{2}}\right)^2 + \dfrac{s^2}{2}
+	\end{align*}
+	a questo punto cambiamo variabile di integrazione: $\eta := \sqrt{2}t - \frac{s}{\sqrt{2}}$
+	da cui $dz\,dt = dz\,d\eta \frac{1}{\sqrt{2}}$.
+	Perciò $\varphi = \eta^2 + \frac{s^2}{2}$, e si riscrive l'integrale come
+	\begin{align*}
+		X_{0, m, m} &= \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}\dfrac{d\eta}{\sqrt{2}}
+		\dfrac{U_0^4}{1+D^2(z)} \cdot \\ \cdot  &\exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Assunzione di interazione locale}
+	Possiamo ora assumere che l'integranda contribuisca all'integrale solo \emph{localmente}, ovvero approssimativamente per $z=z_m=-mT/\beta_2\Omega$. Questo significa che le funzioni $f_B(z)$ e $D(z)$ possono essere sostituite con le costanti $f_B(z_m)$ e $D(z_m)$, rispettivamente. Possiamo inoltre estendere l'integrazione spaziale a tutto $\mathbb{R}$, per ogni $m$ tale per cui $z_m \in [0, L]$.
+	Allora è possibile semplificare l'integrale:
+	\begin{align*}
+		X_{0, m, m} &= f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}}\int_{\mathbb{R}}dz \int_{\mathbb{R}}d\eta
+	 \cdot \\ \cdot  &\exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
+	\end{align*}
+	Restano così due integrali gaussiani si facile soluzione, infatti ricordando 
+	\begin{equation}
+		\int_{\mathbb{R}}dt \exp\left[-\dfrac{t^2}{\alpha}\right] = \sqrt{\alpha \pi} 
+	\end{equation}
+	si ha la soluzione dell'integrale in $\eta$
+	\begin{equation}
+		f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}}  {\color{blue}(T_0^2(1+D^2(z_m)))^{\frac{1}{2}}\sqrt{\pi}} \int_{\mathbb{R}}dz   \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
+\end{equation}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle {Soluzione in interazione locale}
+	Infine, utilizzando $s$ come nuova variabile di integrazione
+	\begin{equation}
+		s = mT+\beta_2\Omega z  \qquad dz = \dfrac{1}{\beta_2\Omega}ds
+	\end{equation}
+	è possibile risolvere anche l'ultimo integrale, quindi si ha
+	\begin{equation}
+		X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} \dfrac{U_0^4}{\cancel{1+D^2(z_m)}} \dfrac{1}{\cancel{\sqrt{2}}} \cancel{\sqrt{2}} T_0^2 \cancel{(1+D^2(z_m))} \pi = \dfrac{f_B(z_m)}{\beta_2 \Omega} U_0^4 T_0^2 \pi
+	\end{equation}
+	Ora ricordiamo la \textit{condizione di normalizzazione} per l'energia degli impulsi (\ref{eq:norm}), sostituendo si ha una cancellazione dei parametri $U_0$ e $T_0$ dell'impulso
+	\begin{equation}\label{eq:solution}
+		X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} \underbracket{U_0^4 T_0^2 \pi}_{=1} = \dfrac{f_B(z_m)}{\beta_2 \Omega}
+	\end{equation}
+	Si noti come questa espressione sia molto simile con quella derivata tramite l'approssimazione di Papoulis \cite[eq. 10]{Dar_2013} (in questo caso abbiamo assunto $z_m \in [0, L]$).
+	Inoltre, mentre l'approssimazione originaria è valida solo a partire da una lunghezza di dispersione ($z_0 = \beta_2/T_0^2$), la (\ref{eq:solution}) è valida \textit{sempre} per impulsi gaussiani.
+\end{frame}
+
+
+\section{Approssimazione di Papoulis}
+\begin{frame}
+	\frametitle{Approssimazione di Papoulis}
+	Quanto ottenuto nella (\ref{eq:solution}) fa sospettare che lo stesso risultato sarebbe stato ottenibile usando l'approssimazione in modo esatto. Infatti un aspetto fondamentale del ragionamento in \cite{Dar_2013} è che gli impulsi siano proporzionali e scalati rispetto ai loro \textit{spettri}. Questo per un impulso gaussiano è sempre vero. 
+	
+	\vspace{20pt}
+	Verifichiamo se l'approssimazione vale in modo esatto: scriviamo i campi in dominio del tempo e della frequenza e confrontiamoli con la \cite[eq. 10]{Dar_2013}. Secondo l'Appendice 1, nel dominio del tempo abbiamo questa espressione equivalente
+	\begin{align}
+		u(z, t) = U_0 \left(\dfrac{1+iD(z)}{1+D^2(z)}\right)^{\frac{1}{2}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1+iD(z)}{1+D^2(z)}\right]
+	\end{align}
+	Mentre nel dominio della frequenza si ha (trasformata standard)
+	\begin{equation}
+		\hat{u}(z, \omega) = U_0 T_0 \exp\left[-\dfrac{1}{2} \omega^2 (T_0^2 - i\beta_2z)\right]	
+	\end{equation}
+	ora si sostituisce $\omega \leftarrow \frac{t}{\beta_2z}$ e si ottiene 
+\end{frame}
+
+\begin{frame}{Verifica dell'approssimazione}
+	\begin{align*}
+		\hat{u}(z, \omega) &= U_0 T_0 \exp\left[-\dfrac{t^2}{2\beta_2^2 z^2} (T_0^2 - i\beta_2z)\right]\\
+		&= U_0 T_0 \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1}{D^2(z)} - i\dfrac{1}{D(z)}\right)\right] \\
+		&= U_0 T_0 \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1-iD(z)}{D^2(z)}\right)\right] 
+	\end{align*}
+Osserviamo l'approssimazione
+\begin{equation}
+		u(z, t) \approx \sqrt{\frac{i}{2\pi \beta_2 z}} \underbracket{\exp\left[-i\frac{t^2}{2 \beta_2 z}\right] \hat{u}\left(0, \frac{t}{\beta_2 z}\right)}_{A}
+\end{equation}
+il termine contrassegnato da $A$ risulta
+\begin{equation}
+	A = U_0 T_0 \exp\left[-i\frac{t^2}{2 T_0^2} \dfrac{1}{D(z)}\right]\exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1-iD(z)}{D^2(z)}\right)\right] = U_0 T_0 \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1}{D^2(z)}\right)\right]
+\end{equation}
+\end{frame}
+
+\begin{frame}{Verifica dell'approssimazione}
+	Quindi dobbiamo verificare la seguente uguaglianza
+	\begin{equation}
+		U_0 \sqrt{\dfrac{1+iD(z)}{1+D^2(z)}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1+iD(z)}{1+D^2(z)}\right]  \stackrel{?}{=}  U_0 \sqrt{\frac{i}{2\pi D(z)}} \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1}{D^2(z)}\right)\right]
+	\end{equation}
+	Queste espressioni non sembrano tuttavia combaciare esattamente. Possiamo approssimare il termine di sinistra, per $D(z)>>1$ con
+	\begin{equation}
+		U_0 \sqrt{\dfrac{i}{D(z)}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1}{D^2(z)}\right] {\color{darkred} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{i}{D(z)}\right]}
+	\end{equation}
+	tuttavia si nota che manca un termine $2\pi$ a \textit{denominatore}, e l'esponenziale di fase \textit{scompare} dall'espressione.
+	
+	\vspace{20pt}
+	La conclusione \textit{provvisoria} è che l'approssimazione non vale in maniera esatta, ed anzi la sua validità nel caso gaussiano è da valutare in un'ulteriore analisi.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Riferimenti}
+	\printbibliography
+\end{frame}
+
+\setbeamercolor*{palette secondary}{fg=blue!60!black,bg=gray!30!white}
+\begin{frame}[plain]
+	\frametitle{Appendice 1 - espressione del campo propagato linearmente}
+	L'espressione del campo in (\ref{eq:field}) contiene un termine di fase del tipo $\exp\left[\frac{i}{2} \arctan(D(z)) \right]$. Questo termine viene scritto in questo modo per evidenziare la divisione del coefficiente della funzione gaussiana tra una componente di modulo ed una di fase. L'espressione è ottenibile tramite antitrasformata di Fourier, da cui si ha l'espressione
+	\begin{equation}
+		u(z, t) = U_0 \left(\dfrac{1+iD(z)}{1+D^2(z)}\right)^{\frac{1}{2}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1+iD(z)}{1+D^2(z)}\right]
+	\end{equation}
+	Può essere utile evidenziare l'algebra del passaggio da questa espressione a quella data. Infatti, usando delle semplici identità goniometriche:
+	\begin{align*}
+		&  \exp\left[ \dfrac{i}{2} \arctan(D(z))\right] = \exp\left[ 2i \arctan(D(z))\right]^{\frac{1}{4}}=\\
+		&  =\left[\cos(2\arctan(D(z))) + i \sin(2\arctan(D(z)))\right]^{\frac{1}{4}}=	\\
+		&  =\left[\dfrac{1-t^2}{1+t^2} + i \dfrac{2t}{1+t^2}\right]^{\frac{1}{4}}  =  \qquad \text{dove $t=\tan\left(\dfrac{\cancel{2}\arctan(D(z))}{\cancel{2}}\right) = D(z)$} \\
+		& = \left[\dfrac{(1+iD(z))^2}{1+D^2(z)}\right]^{\frac{1}{4}} = \dfrac{(1+iD(z))^{\frac{1}{2}}}{(1+D^2(z))^{\frac{1}{4}}}
+	\end{align*}
+\end{frame}
+\begin{comment}
+\begin{frame}[plain]
+	\frametitle{Addendum 1 - }
+	
+\end{frame}
+\end{comment}
+\end{document}

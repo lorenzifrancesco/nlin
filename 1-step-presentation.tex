@@ -1,0 +1,186 @@
+\documentclass[10pt,journal]{IEEEtran}
+%\usepackage[a4paper,width=185mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{url}
+\usepackage{lipsum}
+\usepackage{amsmath, amssymb}
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+\usepackage{graphicx}
+\graphicspath{{../results/}{../immagini/}}
+\DeclareGraphicsExtensions{.png, .pdf, .pgf}
+\usepackage{wrapfig}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{xcolor}
+
+\usepackage{colortbl}
+\usepackage{MnSymbol}
+\usepackage[T1]{fontenc}
+\usepackage{ascii}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{url}
+
+\usepackage{todonotes}
+
+\usepackage[backend=biber]{biblatex}
+\usepackage{csquotes}
+\addbibresource{./analitica.bib}
+
+\title{Generalization of NLIN model for WDM systems to wavelength-dependent Raman gain and attenuation scenarios}
+\author{Francesco Lorenzi, September, October, November 2021}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Starting from \cite{Dar_2013} and \cite{} we develop a generalized model for the phenomenon of NLIN (Non Linear Interference Noise) in the presence of wavelenght-dependent attenuation and Raman gain.
+\end{abstract}
+
+\section{Objective and summary of previous results}
+\subsection{Equation for the field and narrowband approximation}
+    Let us consider the standard NLSE for a fiber with Raman amplification profile $g(z)$
+    \begin{equation}\label{eq:nlse}
+        \frac{\partial}{\partial z} A = -\frac{\alpha - g(z)}{2}A - \beta_1 \frac{\partial}{\partial t} A - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} A + i \gamma |A|^2 A
+    \end{equation}
+    where $t$ is the physical time. Recall that $A$ is proportional to the electric field inside the fiber, in a way such that the dimension of $A$ is $[A^2] = \text{W}$.
+
+    This equation holds for a narrowband field, such that $A(z, t)$ is a slowly varying function of $t$.
+    In a WDM system, this approximation is assumed to be still true, as the usual channel spectral spacing is greater than $12.5$GHz  in third window (as defined in standard \cite{ITU-T} for DWDM architectures). In the presence of hundreds of channels, the total field is still narrowband, as the percentage bandwidth is still low.
+%     However, while this assumption allow the dispersion parameter to be simplified in the writing of $\beta_2$ (second order expansion of the phase constant), the narrowband assumption is critical for the attenuation terms. In fact, a constant attenuation and Raman gain over the signal bandwidth may be an assumption too strong to make, especially when interested in tilting Raman amplification profile for multi-pump schemes. This is the case of the study in \cite{Marcon_2021}.
+
+    In the following, the theoretical framework proposed in \cite{Mecozzi_2012} is reviewed, and the notation is kept as similar as possible. Then a generalization is developed in the case of two interacting WDM channel fields.
+\subsection{Rescaling of fields}
+
+Let us define $\psi(z)$ as
+\begin{equation}
+ \frac{d}{dz}\psi(z) = -\frac{\alpha-g(z)}{2} \psi(z)
+\end{equation}
+Using such function, define $u(z, t)$ as the normalized field
+\begin{equation}
+ A(z, t) = \psi(z)u(z, t)
+\end{equation}
+These definitions, when substituted in \ref{eq:nlse} give rise to a new equation
+\begin{equation}
+ \frac{\partial}{\partial z} u = - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u + i \gamma \psi(z)^2 |u|^2 u
+\end{equation}
+where $f(z) = \psi(z)^2$. The resulting equation show a new, space-varying, nonlinear coefficien.
+\section{Coupled NLS equations for WDM channels}
+Consider two WDM channels named $A$ and $B$.
+The following hypotesis are made:
+\begin{itemize}
+ \item channels $A$ and $B$ have a spectral separation of $\Omega$,
+ \item both channels have the same nonlinear coefficient,
+ \item the group velocity profile is approximatively linear in the frequency ($\beta_2$ is constant) in the whole band of interest
+ \item attenuation and Raman gain depend on the channel choice, but are constant within the band of the same channel.
+\end{itemize}
+Following \cite{Agrawal} p.
+\begin{alignat}{2}
+    &\begin{aligned}
+        \frac{\partial}{\partial z} A_A &= -\frac{\alpha_A - g_A(z)}{2}A_A - \beta_1 \frac{\partial}{\partial t} A_A -  i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} A_A \\ &+ i \gamma (|A_A|^2 +2 |A_B|^2)A_A \\
+    \end{aligned}\label{eq:nlA} \\
+    &\begin{aligned}
+        \frac{\partial}{\partial z} A_B &= -\frac{\alpha_B - g_B(z)}{2}A_B - \beta_1 \frac{\partial}{\partial t} A_B - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} A_B \\ &+ i \gamma (|A_B|^2 +2 |A_A|^2)A_B \\
+    \end{aligned}\label{eq:nlB}
+\end{alignat}
+Let us consider the WDM channel $A$ as the channel of interest.
+
+We now proceed to normalize the fields $A_A$, $A_B$ with the respective normalization functions $\psi_A$, $\psi_B$. In addition, a moving time reference frame is assumed, taking as a reference the time of arrival of the first pulse in channel $A$: $T = t - z/v_{gA} = t - \beta_{1A}z$.
+The resulting coupled equations are
+\begin{alignat}{2}
+    &\begin{aligned}
+        \frac{\partial}{\partial z} u_A &= -  i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_A \\ &+ i \gamma \left(f_A(z)|u_A|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B|^2 \right)u_A \\
+    \end{aligned}\label{eq:uA} \\
+    &\begin{aligned}
+        \frac{\partial}{\partial z} u_B &= - \Delta \beta_1 \frac{\partial}{\partial t} u_B - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_B \\ &+ i \gamma \left(f_B(z)|u_B|^2 +2 \frac{f_B(z)}{f_A(z)}|u_A|^2\right)u_B \\
+    \end{aligned}\label{eq:uB}
+\end{alignat}
+where $\Delta \beta_1 = \beta_{1B} - \beta_{1A} = \beta_2 \Omega$.
+
+
+\section{Generalization of the 0-th order term}
+The term of the 0-th order is identical as the one derived in \cite{Dar_2013}, and this is clearly a result of superposition property of linear equations. The only exception is due to the notation used: the total field in this case cannot be expressed by a simple sum of terms $u_A^{(0)}+u_B^{(0)}$. There are in fact two caveats:
+\begin{itemize}
+ \item $u_A^{(0)}$ and $u_B^{(0)}$ functions represent fields with different normalization constants,
+ \item the functions are derived from \textit{complex amplitudes} of different carrier frequency signals
+\end{itemize}
+the equivalent field complex amplitude, with respect to the channel $A$ carrier frequency, is actually
+\begin{alignat}{1}
+ \begin{aligned}
+  &A_{tot}(z, T) = A_A(z, T) + A_B(z, T) \\= &\psi_A(z)u_A(z, T) + \psi_A(z)u_B(z, T) \exp[-i\Omega T]
+ \end{aligned}
+\end{alignat}
+
+Let us consider the initial fields as sums of shifted impulses which codify a given message. Let $\tau$ be the symbol period:
+\begin{alignat}{1}
+ \begin{aligned}
+   u_A(0, T) &= \sum_{k}a_k g(0, T-k\tau)\\
+   u_B(0, T) &= \sum_{k}b_k g(0, T-k\tau)
+ \end{aligned}
+\end{alignat}
+
+The solution for the 0-th order field is simply:
+\begin{alignat}{1}
+ \begin{aligned}
+   u_A^{(0)}(z, T) &= \sum_{k}a_k g^{(0)}(z, T-k\tau)\\
+   u_B^{(0)}(z, T) &= \sum_{k}b_k g^{(0)}(z, T-k\tau - \beta_2 \Omega z)
+ \end{aligned}
+\end{alignat}
+because of linearity.
+As in \cite{Dar_2013}, we define the differential operators $\mathbf{U}_A(z) = \exp[i \frac{\beta_2}{2} z \frac{\partial^2}{\partial T^2}]$ and $\mathbf{U}_B(z) = \exp[i \frac{\beta_2}{2} z \frac{\partial^2}{\partial T^2} - i \Delta \beta_1 z \frac{\partial}{\partial T}]$ \todo{ci vuole il - davanti al termine di GVD???}.
+So the propagated 0-th order impulses are:
+\begin{equation}
+ g^{(0)}(z, T-k\tau) = \mathbf{U}_j(z) g(z, T-k\tau)
+\end{equation}
+with $j \in \{A, B\}$.
+
+\section{Generalization of first order perturbation theory}
+The separation of fields allow us to analyze separately the effects of SPM and XPM.
+Let us apply the perturbation method to \ref{eq:uA}
+\begin{alignat}{1}
+ \begin{aligned}
+ \frac{\partial}{\partial z} u_A^{(1)} &= -  i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_A^{(1)} \\ &+ i \gamma \left(f_A(z)|u_A^{(0)}|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B^{(0)}|^2 \right)u_A^{(0)} \\
+ \end{aligned}
+\end{alignat} \label{eq:perturbation}
+Writing the integral solution to the inhomogeneous linear equation above:
+\begin{alignat}{1}
+ \begin{aligned}
+ &u_A^{(1)}(L, T) =\\ &i\gamma \int_0^L \mathbf{U}_A(L-z)\left(f_A(z)|u_A^{(0)}|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B^{(0)}|^2 \right)u_A^{(0)} dz
+ \end{aligned}
+\end{alignat} \label{eq:solution}
+
+\section{Generalization of estimation error}
+\subsection{Generic expression under matched filter conditions}
+Using a matched filter receiver, with matching to the linearly propagated initial pulse waveform $g^{(0)}(z, T)$, we obtain the following equation for the estimation error on the first symbol $\Delta a_0$ by expanding the perturbation term
+\begin{alignat}{1}
+ \begin{aligned}
+ \Delta a_0 &= \int_{-\infty}^{\infty} u_A^{(1)}(L, T) g^{(0)*}(z, T) dT =\\
+ &=
+ \end{aligned}
+\end{alignat} \label{eq:matched}
+\subsection{Expanded expression for given modulation format}
+\begin{equation}
+	     \mathbf{U}[z]=\exp \left[i \frac{\beta_{2}}{2} z \frac{\partial^{2}}{\partial t^{2}} \right]
+\end{equation}
+
+\begin{equation}
+	      u(0, t)=\sum_{k} b_{k} g(0, t - \tau k) e^{i \Omega t}
+\end{equation}
+
+\begin{equation}
+	   	g(0, t) e^{i \Omega t} \rightarrow \hat{g}(0, \omega-\Omega)
+\end{equation}
+
+\begin{equation}
+	     \hat{\mathbf{U}}[z]=\exp \left[- i \frac{\beta_{2}}{2} z \omega^2 \right]
+\end{equation}
+
+\subsection{XPM term}
+
+
+
+\hrulefill
+\printbibliography
+\end{document}

@@ -1,0 +1,235 @@
+\documentclass[8pt]{beamer} %[handout]
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mwe}
+\usepackage{listings}
+\usepackage{multicol}
+% \usepackage{beton}
+% \usepackage{euler}
+% \usepackage{fontspec}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\setlength{\marginparwidth}{1.5cm}
+
+\usepackage{todonotes}
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\usepackage{csquotes}
+\addbibresource{./presentazione.bib}
+
+\title{Generalization of NLIN model for WDM systems to wavelength-dependent Raman gain and attenuation scenarios \\ \vspace{10pt} \small{Step 2: generalization of $X_{0, m, m}$}}
+\author{Francesco Lorenzi}
+\date{October 2021}
+\institute[Università degli studi di Padova \\ Dipartimento di ingegneria dell'informazione]{}
+
+\titlegraphic{\includegraphics[width=0.25\textwidth]{../images/logo/unipd-text.png} \hspace{1cm} \includegraphics[width=0.25\textwidth]{../images/logo/DEI-text.png}}
+
+\usetheme{Berlin}
+\usecolortheme{beaver}
+% \usefonttheme{structuresmallcapsserif}
+\usepackage{textpos}
+\addtobeamertemplate{frametitle}{}{%
+\begin{textblock*}{100mm}(.85\textwidth,-1.1cm)
+\hspace{2cm}\includegraphics[width = 0.4cm]{../images/logo/DEI.png}
+\end{textblock*}}
+\usefonttheme{professionalfonts} % using non standard fonts for beamer
+\usefonttheme{serif} % default family is serif
+% remove navigation symbols from beamer theme
+\beamertemplatenavigationsymbolsempty
+
+\addtobeamertemplate{navigation symbols}{}{
+  \usebeamerfont{footline}
+  \usebeamercolor[fg]{footline}
+  \hspace{1em}
+  \insertframenumber/\inserttotalframenumber
+}
+
+\setbeamertemplate{footline}{}
+%\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+  
+\begin{document}
+
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+  \insertshorttitle\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+\begin{frame}
+	\maketitle
+\end{frame}
+
+\begin{frame}
+	\frametitle{Comment}
+    The calculation done in \cite[eq. 1]{Dar_2013} are actually the correct version of the linearly propagated field (superposition of channel of interest and interferer) except for a sign. In the following derivation the calculations are made again.
+
+    In order to prove the equation let us recall the linear propagator operator (as defined in \cite{Dar_2013}):
+    \begin{equation}
+     \mathbf{U}[z]=\exp \left[i \frac{\beta_{2}}{2} z \frac{\partial^{2}}{\partial t^{2}} \right]
+    \end{equation}
+    Then, let us focus on the interfering channel field at the \textit{input}
+    \begin{equation}
+      u(0, t)=\sum_{k} b_{k} g(0, t - \tau k) e^{i \Omega t}
+   \end{equation}
+   and apply the propagator. 
+   
+   This is best done in frequency domain, and, by linearity, it is possible to focus only on the symbol waveform $g$. 
+   Using frequency shifting property
+   \begin{equation}
+   	g(0, t) e^{i \Omega t} \rightarrow \hat{g}(0, \omega-\Omega)
+   \end{equation} In frequency domain, we have the operator
+    \begin{equation}
+     \hat{\mathbf{U}}[z]=\exp \left[- i \frac{\beta_{2}}{2} z \omega^2 \right]
+    \end{equation}
+	Let us focus on the linear propagation of complex envelope \textit{spectrum} of a single impulse
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Computation of $u^{(0)}$}
+\begin{equation}
+	\hat{g}^{(0)}(z, \omega) =  \exp \left[- i \frac{\beta_{2}}{2} z \omega^2 \right] \hat{g}(0, \omega - \Omega)
+\end{equation}
+considering the antitransform, with a square completion argument,
+ \begin{alignat}{2}
+    &\begin{aligned}
+        \frac{1}{2\pi} \int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z \omega^2 \right] \hat{g}(z, \omega - \Omega) \exp \left[i\omega t\right] d\omega =
+    \end{aligned}\label{eq:nlA} \\
+    &\begin{aligned}
+       =\frac{1}{2\pi} \int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z (\omega-\Omega)^2 \right]  \hat{g}(z, \omega - \Omega) \exp \left[i(\omega -\Omega) t\right] \\
+   \underbrace{\exp \left[i\Omega t\right]}_{\text{frequency shifting}} \underbrace{\exp \left[- i \beta_2 z \omega \Omega\right]}_{\text{time delay}} \underbrace{\exp\left[i\frac{\beta_2}{2}z \Omega^2 \right]}_{\text{constant}} d\omega
+    \end{aligned}\label{eq:nlB}
+\end{alignat}
+in the notation of \cite{Dar_2013}, $g^{(0)}(z, t) = \mathbf{U}(z)g(0, t)$ is the pulse propagated as in the channel of interest, so we have the following antitransform relation
+\begin{equation}
+	g^{(0)}(z, t) = \frac{1}{2\pi}\int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z \omega^2 \right]  \hat{g}(z, \omega) \exp\left[i\omega t\right]d\omega
+\end{equation}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Computation of $u^{(0)}$}
+	In conclusion, by using a simple change of variables and the time shifting property:
+	\begin{equation}
+		\mathcal{F}^{-1}\left[\exp[-i\omega t_0] \hat{x}(\omega)\right](t) = x(t-t_0)
+	\end{equation}
+	The linearly propagated single impulse of the \textit{interfering} channel is
+	\begin{equation}
+		\exp \left[i\Omega t\right] \exp \left[i \frac{\beta_2}{2}\Omega^2 z \right] g^{(0)}(z, t - \beta_2\Omega z)
+	\end{equation}
+	notice that the frequency component $\exp[i \Omega t]$ has opposite sign with respect to \cite{Dar_2013}. All the other terms are exactly the same.
+	This may be due to a sign error in the usage of the frequency shifting property, which is
+	\begin{equation}
+		\mathcal{F}\left[\exp[i \Omega t] x(t)\right](\omega) = \hat{x}(\omega - \Omega)
+	\end{equation}
+
+	\vspace{20pt}
+	There is still a point to be discussed, regarding the definition of the propagator.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Caveat on $\mathbf{U}(z)$ and proposed solution}
+	The linear equation to be solved is 
+	\begin{equation}
+		\frac{\partial}{\partial z} g^{(0)}(z, t) = - i \frac{\beta_2}{2}\frac{\partial^2}{\partial t^2} g^{(0)}(z, t)
+	\end{equation}
+	By the shift theorem \cite{Wiener_1926} it is possible to write it in symbolic form
+	\begin{equation}
+		\exp\left[h \frac{\partial}{\partial z}\right] g^{(0)}(z, t) = g^{(0)}(z+h, t) = \exp\left[- i \frac{\beta_2}{2}h\frac{\partial^2}{\partial t^2} \right]  g^{(0)}(0, t)
+	\end{equation}
+	In this way we notice that the propagator operator may be defined as
+	\begin{equation}
+		\mathbf{U}(h) = \exp\left[- i \frac{\beta_2}{2}h\frac{\partial^2}{\partial t^2} \right]
+	\end{equation}
+	which is in contradiction with respect to \cite{Dar_2013} in which the sign of the argument is inverted.
+	By calculating again the propagated impulse, the result is
+	\begin{equation}
+		\exp \left[i\Omega t -i \frac{\beta_2}{2}\Omega^2 z \right] g^{(0)}(z, t + \beta_2\Omega z)
+	\end{equation} 
+	which shows inverted sign on the terms which involve $\beta_2$.
+	This aspect will require further investigation, to be justified with physical arguments and to be matched with \cite{Dar_2013} and \cite[eq. 23]{Mecozzi_2012}.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Computation of $X_{0, m, m}$}
+	Let us derive the calculations done in \cite[eq. 11, 12]{Dar_2013}. Starting from the highly-dispersed pulse approximation, we get
+	\begin{equation}
+		g^{(0)}(z, t) \approx \sqrt{\frac{i}{2\pi \beta_2 z}} \exp\left[-\frac{it}{2 \beta_2 z}\right] \hat{g}\left(0, \frac{t}{\beta_2 z}\right)	
+	\end{equation}
+	Now, it is possible to compute the coefficient $X_{0, m, m}$ through energy integral in Fourier space by defining $\nu = t/\beta_2 z$
+	\begin{equation}
+		X_{0, m, m} = \int_{z_0}^{L} dz f(z) \int_{\mathbb{R}} \frac{d\nu}{4\pi^2 \beta_2 z} |\hat{g}(0, \nu)|^2 \left|\hat{g}\left(0, \nu-\Omega-\frac{m\tau}{\beta_2 z}\right)\right|^2
+	\end{equation}
+	The approximation is that the strongest overlap happens at $z_m = -\frac{m\tau}{\beta_2 \Omega}$
+	
+	\textit{If the pulse centered at $z_m$ suffers approximately the same attenuation in all of its spatial positions}, it is allowed to assume the $f$ function constant and $f(z) = f(z_m)$. A further assumption is made as $z_m/z$ is assumed to be unitary, as most of the overlap happens at $z=z_m$. So the integral becomes
+	\begin{equation}
+		X_{0, m, m} = \int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}} dz\frac{\, z_m f(z_m)}{4\pi^2 \beta_2 z^2}\left|\hat{g}\left(0, \nu-\Omega-\frac{m\tau}{\beta_2 z}\right)\right|^2
+	\end{equation}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Computation of $X_{0, m, m}$}
+	Notice that the integration along all the space allow us to recall an important property of the impulses: they are of unit energy. Using Parseval identity it is possible to eliminate the impulse waveform in the following way.
+	Let us adopt this change of variables:
+	\begin{equation}
+		y:= -\frac{m\tau}{\beta_2 z} \quad \implies \quad dy = \frac{m\tau}{\beta_2 z^2}
+	\end{equation}
+	The multiplication by $z_m/z$ creates the term $dy$ along with the other constants:
+	\begin{align}
+		X_{0, m, m} &= \int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}} \frac{f(z_m)}{2\pi \beta_2 \Omega}  \Big(-\underbrace{\frac{m\tau}{\beta_2 z^2} dz}_{dy}\Big) \left|\hat{g}\left(0, \nu-\Omega-\frac{m\tau}{\beta_2 z}\right)\right|^2 \\
+		&=  \frac{f(z_m)}{ \beta_2 \Omega}\int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}} - \frac{dy}{2\pi} \left|\hat{g}\left(0, \nu-\Omega + y \right)\right|^2
+	\end{align}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Computation of $X_{0, m, m}$}
+	If $f(z_m)$ is assumed to be $1$ in perfect amplification scenario, the integrals simplify to
+	\begin{equation}
+		=\frac{1}{ \beta_2 \Omega}\int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}}  \frac{dy}{2\pi} \left|\hat{g}\left(0, \nu-\Omega + y\right)\right|^2
+	\end{equation}
+	finally, both integrals, by Parseval, sum to 1, so 
+	\begin{equation}
+		X_{0, m, m} = \frac{1}{\beta_2 \Omega}  
+	\end{equation}
+	when $z_m$ falls inside the fiber and in the region of high dispersion, $0$ otherwise.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Generalization of $X_{0, m, m}$}
+	The generalization of the above calculation has only one critical point:
+	\begin{itemize}
+		\item In the overlap region the cumulative pulse attenuation $f$ is assumed to be constant.
+	\end{itemize}
+	If this assumption holds true, the expression generalizes naturally
+	\begin{equation}
+		X_{0, m, m} = \frac{f_B(z_m)}{\beta_2 \Omega}	
+	\end{equation}
+	
+	Otherwise, we may be interested in cases in which this assumption do not hold:
+	\begin{enumerate}
+		\item walkoff near zero (interaction happens not only near $z_m$, but in a broader region)
+		\item very long fibers (pulses fully interact without border effects)
+	\end{enumerate}
+	and in general when interaction may not be assumed local. 	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Generalization of $X_{0, m, m}$}
+	In such cases, a possible way to compute $X_{0, m, m}$ is dependent only on
+	\begin{enumerate}
+		\item Pulse shape (modulation format)
+		\item Cumulative attenuation of interfering channel $f_B$
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{References}
+ \printbibliography
+\end{frame}
+
+
+\end{document}

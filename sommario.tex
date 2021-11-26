@@ -1,0 +1,495 @@
+\documentclass[10pt, lettersize, journal, onecolumn]{IEEEtran}
+
+%\usepackage[a4paper,width=185mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{url}
+\usepackage{lipsum}
+\usepackage{amsmath, amsfonts, amssymb, mathtools}
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+\usepackage{graphicx}
+\graphicspath{{../results/}{../immagini/}}
+\DeclareGraphicsExtensions{.png, .pdf, .pgf}
+\usepackage{wrapfig}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{MnSymbol}
+\usepackage[T1]{fontenc}
+\usepackage{ascii}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{url}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\usepackage{todonotes}
+\usepackage{comment}
+\usepackage[backend=biber]{biblatex}
+\usepackage{csquotes}
+\addbibresource{../analitica/analitica.bib}
+\usepackage[makeroom]{cancel}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage{textcomp}
+
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+
+\title{Generalization of NLIN model for WDM systems to wavelength-dependent Raman gain and attenuation scenarios}
+\author{Francesco Lorenzi}
+%\institute{Dipartimento di Ingegneria dell'Informazione, Università degli studi di Padova}
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+Starting from \cite{Dar_2013}, we develop a generalized model for the phenomenon of NLIN (Non Linear Interference Noise) in the presence of wavelenght-dependent attenuation and Raman gain.
+\end{abstract}
+\section{Introduction}
+Non Linear Interference Noise (NLIN) is a phenomenon which is a crucial limit to the performances of modern WDM links. In systems that implement Raman amplification, along with Amplified Stimulated Emission noise (ASE), NLIN may be a subject of interest in determining the noise performance of amplifiers. A time-domain model for NLIN is proposed in \cite{Dar_2013}, however, in this article, the nonlinear interaction between channel is done assuming a \textit{perfect amplification}, which means that the coefficient of Raman amplification $g(z)$ is identically equal to $\alpha$, and this relationship holds for every WDM channel.
+Dropping this assumption requires to develop a slight modification of the model.
+
+The aim of the article is twofold: in the first place is to generalize the model proposed in \cite{Dar_2013} to generic Raman gain and attenuation scenarios: the goal is to derive an expression for the XPM coefficient $X_{0, m, m}$ similar to the one in \cite{Dar_2013}.
+In second place, the aim is to shed light on some mathematical aspects of the problem that may result not straightforward.
+
+In section \ref{previous} a review of past work is given along with some comments on notation and methods that are useful for the rest of the article.
+
+In section \ref{framework} we develop a new framework in which it is possible to generalize the analysis done in past works to scenarios in which wavelength and position dependent Raman gain and attenuation are present.
+
+In section \ref{link} the new framework is compared to the old one and some linking formulas are given for clarity.
+
+In order to compute the XPM coefficient of interest, in section \ref{approx} the approximation developed in \cite{Dar_2013} is considered, and its limits are described.
+To circumvent these limitations, in section \ref{gauss} the computation are done in the gaussian pulses hypotesis, which allow a simplification of original expression of the coefficient.
+
+Appendices are given to clarify the mathematical aspects of the generalization.
+\section{Summary of previous results}\label{previous}
+\subsection{Equation for the field and narrowband approximation}
+    Let us consider the standard Non-Linear Schrödinger (NLSE) for a fiber with Raman amplification profile $g(z)$
+    \begin{equation}\label{eq:nlse}
+        \frac{\partial}{\partial z} A = -\frac{\alpha - g(z)}{2}A - \beta_1 \frac{\partial}{\partial t} A - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} A + i \gamma |A|^2 A
+    \end{equation}
+    where $t$ is the physical time. Recall that $A$ is proportional to the electric field inside the fiber, in a way such that the dimension of $A$ is $[A^2] = \text{W}$.
+
+    This equation holds for a narrowband field, such that $A(z, t)$ is a slowly varying function of $t$.
+    In a WDM system, this approximation is assumed to be still true, as the usual channel spectral spacing is greater than $12.5$GHz  in third window (as defined in standard \cite{ITU-T} for DWDM architectures). In the presence of tens of channels, the total field may still be assumed as narrowband.
+	However, while this assumption allow the dispersion parameter to be simplified in the writing of $\beta_2$ (second order expansion of the phase constant), the narrowband assumption is still critical for the attenuation terms. In fact, a constant attenuation and Raman gain over the signal bandwidth may be an assumption too strong to make, especially when interested in tilting Raman amplification profile for multi-pump schemes. This is the case of the study in \cite{Marcon_2021}.
+	So the model with a single NLSE equation holds for \textit{perfect amplification} scenarios, but needs to be modified in the generalization.
+   % In the following, the theoretical framework proposed in \cite{Mecozzi_2012} is reviewed, and the notation is kept as similar as possible. 
+   % Then a generalization is developed in the case of two interacting WDM channel fields.
+   Let us comment now a simple mathematical procedure that simplify the notation in the NLSE, in presence of attenuation.
+\subsection{Rescaling of fields}\label{ss:rescaling}
+
+Let $\psi(z)$ be defined as a solution of the following differential equation.
+\begin{equation}
+ \frac{d}{dz}\psi(z) = -\frac{\alpha-g(z)}{2} \psi(z)
+\end{equation}
+using such function, let $u(z, t)$ be defined as the \textit{normalized field}:
+\begin{equation}
+ A(z, t) = \psi(z)u(z, t)
+\end{equation}
+These definitions, when substituted in \ref{eq:nlse} give the following equation:
+\begin{equation}\label{eq:bella}
+ \frac{\partial}{\partial z} u = - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u + i \gamma f(z) |u|^2 u
+\end{equation}
+where $f(z) = \psi(z)^2$. The advantage in using the \ref{eq:bella} is that the attenuation dynamics can be incorporated in the nonlinear one: in fact $\gamma f(z)$ can be interpreted as a position-dependent nonlinear coefficient.
+In the model from \cite{Dar_2013}, using the \textit{perfect amplification} assumption, $f(z) \equiv 1$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Coupled NLS equations for WDM channels} \label{framework}
+Consider two WDM channels named $A$ and $B$.
+The following hypotesis are made:
+\begin{itemize}
+ \item channels $A$ and $B$ have a spectral separation of $\Omega$,
+ \item both channels have the same nonlinear coefficient (it depends from modal field distribution in the core which is assumed to be the same for all channels),
+ \item the group velocity profile is approximatively linear in the frequency ($\beta_2$ is constant) in the whole band of interest,
+ \item attenuation and Raman gain depend on the channel choice, but are approximately constant within the band of a given channel.
+\end{itemize}
+Following Agrawal \cite[p.263]{Agrawal}, a system of \textit{coupled NLSE} is given: the issue of the channel-dependent attenuation and gain is solved easily for such a model of fields.
+The equations are:
+\begin{alignat}{2}
+    &\begin{aligned}
+        \frac{\partial}{\partial z} A_A &= -\frac{\alpha_A - g_A(z)}{2}A_A - \beta_1 \frac{\partial}{\partial t} A_A -  i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} A_A + i \gamma (|A_A|^2 +2 |A_B|^2)A_A \\
+    \end{aligned}\label{eq:nlA} \\
+    &\begin{aligned}
+        \frac{\partial}{\partial z} A_B &= -\frac{\alpha_B - g_B(z)}{2}A_B - \beta_1 \frac{\partial}{\partial t} A_B - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} A_B + i \gamma (|A_B|^2 +2 |A_A|^2)A_B \\
+    \end{aligned}\label{eq:nlB}
+\end{alignat}
+Let us consider the WDM channel $A$ as the channel of interest, and WDM channel $B$ as the interfering one.
+
+Let us now proceed in normalizing the fields $A_A$, $A_B$ with the respective normalization functions $\psi_A$, $\psi_B$, as described in \ref{ss:rescaling}.
+In addition, a moving time reference frame is assumed, taking as a reference the time of arrival of the first pulse in channel $A$: \textit{from this point, until the end of the article, the variable $t$ indicates the normalized time.}
+The resulting coupled equations are:
+\begin{align}\label{eq:u}
+    \frac{\partial}{\partial z} u_A &= \qquad \qquad \quad \; - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_A + i \gamma \left(f_A(z)|u_A|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B|^2 \right)u_A \\
+    \frac{\partial}{\partial z} u_B &= - \Delta \beta_1 \frac{\partial}{\partial t} u_B - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_B + i \gamma \left(f_B(z)|u_B|^2 +2 \frac{f_B(z)}{f_A(z)}|u_A|^2\right)u_B \\
+\end{align}
+where $\Delta \beta_1 = \beta_{1B} - \beta_{1A} = \beta_2 \Omega$. 
+Following \cite{Dar_2013}, a first order perturbation analysis is proposed for these equations.
+
+\subsection{Generalization of the $0^{th}$ order term}
+Since the attenuation only affects the nonlinear term, the normalized field of the $0^{th}$ order must be identical as the one derived in \cite[eq. 1]{Dar_2013}. The only exception is due to the notation used: the total field in this case can not be expressed by a simple sum of terms $u_A^{(0)}+u_B^{(0)}$. There are in fact two notaional caveats:
+\begin{itemize}
+ \item $u_A^{(0)}$ and $u_B^{(0)}$ functions represent fields with different normalization constants,
+ \item the functions are derived from \textit{complex amplitudes} (see for example \cite[pp. 523-525]{Someda}) of \textit{different} carrier frequency signals
+\end{itemize}
+The different representation of fields is explained in \ref{link}.
+
+Let us consider the initial fields as sums of shifted impulses which codify a given message. Let $T$ be the symbol period:
+\begin{alignat}{1}
+ \begin{aligned}
+   u_A(0, T) &= \sum_{k}a_k g(0, T-kT)\\
+   u_B(0, T) &= \sum_{k}b_k g(0, T-kT)
+ \end{aligned}
+\end{alignat}
+
+The solution for the $0^{th}$ order field is simply:
+\begin{alignat}{1}
+ \begin{aligned}\label{eq:modulation}
+   u_A^{(0)}(z, T) &= \sum_{k}a_k g^{(0)}(z, T-kT)\\
+   u_B^{(0)}(z, T) &= \sum_{k}b_k g^{(0)}(z, T-kT - \beta_2 \Omega z)
+ \end{aligned}
+\end{alignat}
+because of linearity, and definition of $g^{(0)}$.
+As in \cite{Dar_2013}, we define the differential operators
+\begin{align}
+	\mathbf{U}_A(z) &= \exp\left[i \frac{\beta_2}{2} z \frac{\partial^2}{\partial T^2}\right] \\
+	\mathbf{U}_B(z) &= \exp\left[i \frac{\beta_2}{2} z \frac{\partial^2}{\partial T^2} - i \Delta \beta_1 z \frac{\partial}{\partial T}\right]
+\end{align}
+So the propagated $0^{th}$ order impulses have this alternative expression:
+\begin{equation}
+ g^{(0)}(z, T-kT) = \mathbf{U}_j(z) g(0, T-kT)
+\end{equation}
+with $j \in \{A, B\}$.
+
+\subsection{Generalization of first order perturbation theory}
+The separation of fields allow us to analyze separately the effects of SPM and XPM.
+Let us apply the perturbation method to \ref{eq:u}
+\begin{alignat}{1}
+ \begin{aligned}
+ \frac{\partial}{\partial z} u_A^{(1)} &= -  i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_A^{(1)} + i \gamma \left(f_A(z)|u_A^{(0)}|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B^{(0)}|^2 \right)u_A^{(0)} \\
+ \end{aligned}
+\end{alignat} \label{eq:perturbation}
+Notice that the normalized fields $u^{(0)}_A$ and $u^{(0)}_B$ can not be summed together because they are complex amplitudes with respect to different carriers. However, their squared absolute value indicates only the power of the wave, so the summation of these terms makes physical sense.
+Writing the integral solution to the inhomogeneous linear equation above:
+\begin{alignat}{1}
+ \begin{aligned}
+ u_A^{(1)}(L, t) = i\gamma \int_0^L \mathbf{U}_A(L-z)\left(f_A(z)|u_A^{(0)}|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B^{(0)}|^2 \right)u_A^{(0)} dz
+ \end{aligned}\label{eq:solution}
+\end{alignat} 
+
+\subsection{Generalization of estimation error}
+Using a matched filter receiver, with matching to the linearly propagated initial pulse waveform $g^{(0)}(L, T)$, we obtain the following equation for the estimation error on the first symbol $\Delta a_0$ 
+\begin{alignat}{1}
+ \begin{aligned}
+ \Delta a_0 &= \int_{-\infty}^{\infty} u_A^{(1)}(L, t) g^{(0)*}(L, t) dt
+ \end{aligned}
+\end{alignat} \label{eq:matched}
+Recall that $\mathbf{U}_A$ is unitary, so it holds
+\begin{equation}\label{eq:subs}
+	\mathbf{U}_A(L-z) g^{(0)*}(L, t) = g^{(0)*}(z, t)
+\end{equation}
+
+Using this identity, the expression for the error can be written as:
+\begin{equation}
+	\Delta a_0 = i\gamma \int_{z_0}^{L} dz \int_{-\infty}^{\infty} dt g^{(0)*}(z, t) \left(f_A(z)|u_A^{(0)}|^2 + 2 f_B(z)|u_B^{(0)}|^2\right) u_A^{(0)}
+\end{equation}
+By substituting the modulation of choice as in \ref{eq:modulation}, we get an expression ready to be computed with respect to a given modulation format
+Notice that, being that the two fibers linear propagation terms are different, the substitution as done in \ref{eq:subs} is valid only because matching is done by considering the propagated symbol waveform over channel A.
+Finally, substituting the modulation and using the same notation as \cite[eq. 5, 6, 7]{Dar_2013}, the resulting expression is
+\begin{equation}
+	\Delta a_0 = i \gamma \sum_{h, k, m} \left(a_h a_k^* a_m S_{h, k, m} + 2 a_h b_k^* b_m X_{h, k, m}\right)
+\end{equation}
+
+The (generalized) interaction terms are
+\begin{equation}
+	S_{h, k, m} = \int_{z_0}^{L} dz f_A(z) \int_{-\infty}^{\infty} dt g^{(0)}(z, t-hT) g^{(0)*}(z, t-hT) g^{(0)}(z, t-kT)g^{(0)*}(z, t-mT)
+\end{equation}
+for the SPM, and
+\begin{equation}\label{eq:hkm}
+	X_{h, k, m} = \int_{z_0}^{L} dz f_B(z) \int_{-\infty}^{\infty} dt g^{(0)}(z, t-hT) g^{(0)*}(z, t-hT) g^{(0)}(z, t-kT)g^{(0)*}(z, t-mT)
+\end{equation}
+for the XPM.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Connection to previous results} \label{link}
+%%%%%%%%%%%%%%%%% COMPLEX AMPLITUDES
+Suppose that the fields are represented as complex amplitudes with respect to the channel A center frequency.
+The equivalent linearly propagated total field is computed as
+\begin{alignat}{1}
+	\begin{aligned}
+		A_{tot}(z, t) &= A_A(z, t) + A_B(z, t) \\&= \psi_A(z)u_A(z, t) + \psi_B(z)u_B(z, t) \exp[-i\Omega t] \\
+		&= \psi_A(z) \sum_k a_k g^{(0)}(z, t) + \psi_B(z) \exp[-i\Omega t] \sum_k b_k g^{(0)}(z, t)
+	\end{aligned}
+\end{alignat}
+neglecting the attenuation-gain coefficients, this expression can be written as
+\begin{equation}
+	u_{tot}(z, t) = \sum_k a_k g^{(0)}(z, t) + \exp[-i\Omega t] \sum_k b_k g^{(0)}(z, t)
+\end{equation}
+so this appears to be in contradiction with respect to \cite[eq. 1]{Dar_2013}, which is
+\begin{equation}	
+	u_{tot}(z, t) = \sum_k a_k g^{(0)}(z, t) + \exp\left[-i\Omega t + i\frac{\beta_2 \Omega^2}{2}z\right] \sum_k b_k g^{(0)}(z, t)
+\end{equation}
+
+This inconsistency is only apparent, because even the \textit{propagated} fields $g^{(0)}(z, t)$ differ in their definition, as the propagation equation for $u_B$ contains the walkoff term $-\Delta \beta_1 \frac{\partial}{\partial t}u_B$.
+In the following, the calculations are made again.
+In order to prove the equation let us recall the linear propagator operator (as defined in \cite{Dar_2013}):
+\begin{equation}
+	\mathbf{U}[z]=\exp \left[i \frac{\beta_{2}}{2} z \frac{\partial^{2}}{\partial t^{2}} \right]
+\end{equation}
+Then, let us focus on the interfering channel field at the \textit{input}
+\begin{equation}
+	u(0, t)=\sum_{k} b_{k} g(0, t - T k) e^{i \Omega t}
+\end{equation}
+and apply the propagator.
+This is best done in frequency domain, and, by linearity, it is possible to focus only on the symbol waveform $g$. 
+Using frequency shifting property
+\begin{equation}
+	g(0, t) e^{i \Omega t} \rightarrow \hat{g}(0, \omega-\Omega)
+\end{equation} In frequency domain, we have the operator
+\begin{equation}
+	\hat{\mathbf{U}}[z]=\exp \left[- i \frac{\beta_{2}}{2} z \omega^2 \right]
+\end{equation}
+Let us focus on the linear propagation of complex envelope \textit{spectrum} of a single impulse
+
+
+\begin{equation}
+	\hat{g}^{(0)}(z, \omega) =  \exp \left[- i \frac{\beta_{2}}{2} z \omega^2 \right] \hat{g}(0, \omega - \Omega)
+\end{equation}
+considering the antitransform, with a square completion argument,
+\begin{alignat}{2}
+	&\begin{aligned}
+		\frac{1}{2\pi} \int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z \omega^2 \right] \hat{g}(z, \omega - \Omega) \exp \left[i\omega t\right] d\omega =
+	\end{aligned}\label{eq:nlA} \\
+	&\begin{aligned}
+		=\frac{1}{2\pi} \int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z (\omega-\Omega)^2 \right]  \hat{g}(z, \omega - \Omega) \exp \left[i(\omega -\Omega) t\right] 
+		\underbrace{\exp \left[i\Omega t\right]}_{\text{frequency shifting}} \underbrace{\exp \left[- i \beta_2 z \omega \Omega\right]}_{\text{time delay}} \underbrace{\exp\left[i\frac{\beta_2}{2}z \Omega^2 \right]}_{\text{constant}} d\omega
+	\end{aligned}\label{eq:nlB}
+\end{alignat}
+in the notation of \cite{Dar_2013}, $g^{(0)}(z, t) = \mathbf{U}(z)g(0, t)$ is the pulse propagated as in the channel of interest, so we have the following antitransform relation
+\begin{equation}
+	g^{(0)}(z, t) = \frac{1}{2\pi}\int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z \omega^2 \right]  \hat{g}(z, \omega) \exp\left[i\omega t\right]d\omega
+\end{equation}
+
+In conclusion, by using a simple change of variables and the time shifting property:
+\begin{equation}
+	\mathcal{F}^{-1}\left[\exp[-i\omega t_0] \hat{x}(\omega)\right](t) = x(t-t_0)
+\end{equation}
+The linearly propagated single impulse of the \textit{interfering} channel is
+\begin{equation}
+	\exp \left[i\Omega t\right] \exp \left[i \frac{\beta_2}{2}\Omega^2 z \right] g^{(0)}(z, t - \beta_2\Omega z)
+\end{equation}
+notice that the frequency component $\exp[i \Omega t]$ has opposite sign with respect to \cite{Dar_2013}. All the other terms are exactly the same.
+This may be due to a sign convention in the usage of the frequency shifting property, which is
+\begin{equation}
+	\mathcal{F}\left[\exp[i \Omega t] x(t)\right](\omega) = \hat{x}(\omega - \Omega)
+\end{equation}
+
+\vspace{20pt}
+There is still a point to be discussed, regarding the definition of the propagator.
+
+The linear equation to be solved is 
+\begin{equation}
+	\frac{\partial}{\partial z} g^{(0)}(z, t) = - i \frac{\beta_2}{2}\frac{\partial^2}{\partial t^2} g^{(0)}(z, t)
+\end{equation}
+By the shift theorem \cite{Wiener_1926} it is possible to write it in symbolic form
+\begin{equation}
+	\exp\left[h \frac{\partial}{\partial z}\right] g^{(0)}(z, t) = g^{(0)}(z+h, t) = \exp\left[- i \frac{\beta_2}{2}h\frac{\partial^2}{\partial t^2} \right]  g^{(0)}(0, t)
+\end{equation}
+In this way we notice that the propagator operator may be defined as
+\begin{equation}
+	\mathbf{U}(h) = \exp\left[- i \frac{\beta_2}{2}h\frac{\partial^2}{\partial t^2} \right]
+\end{equation}
+which is in contradiction with respect to \cite{Dar_2013} in which the sign of the argument is inverted.
+By calculating again the propagated impulse, the result is
+\begin{equation}
+	\exp \left[i\Omega t -i \frac{\beta_2}{2}\Omega^2 z \right] g^{(0)}(z, t + \beta_2\Omega z)
+\end{equation} 
+which shows inverted sign on the terms which involve $\beta_2$.
+This aspect will require further investigation, to be justified with physical arguments and to be matched with \cite{Dar_2013} and \cite[eq. 23]{Mecozzi_2012}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Computation of $X_{0, m, m}$} \label{approx}
+	\subsection{High dispersion approximation}
+Let us first comment the calculations done in \cite[eq. 11, 12]{Dar_2013}. Starting from the highly-dispersed pulse approximation, we get
+\begin{equation}\label{eq:papoulis}
+	g^{(0)}(z, t) \approx \sqrt{\frac{i}{2\pi \beta_2 z}} \exp\left[-\frac{it}{2 \beta_2 z}\right] \hat{g}\left(0, \frac{t}{\beta_2 z}\right)	
+\end{equation}
+Now, it is possible to compute the coefficient $X_{0, m, m}$ through energy integral in Fourier space by defining $\nu = t/\beta_2 z$
+\begin{equation}
+	X_{0, m, m} = \int_{z_0}^{L} dz f(z) \int_{\mathbb{R}} \frac{d\nu}{4\pi^2 \beta_2 z} |\hat{g}(0, \nu)|^2 \left|\hat{g}\left(0, \nu-\Omega-\frac{mT}{\beta_2 z}\right)\right|^2
+\end{equation}
+The approximation is that the strongest overlap happens at $z_m = -\frac{mT}{\beta_2 \Omega}$
+By the \textit{perfect amplification} hypotesis, it is assumed that $f(z) \equiv 1$. A further assumption is made claiming that most of the overlap happens at $z=z_m$, so the integrand is non negligible only when $z_m/z \approx 1$. 
+The integral becomes
+\begin{equation}
+	X_{0, m, m} = \int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}} dz\frac{\, z_m f(z_m)}{4\pi^2 \beta_2 z^2}\left|\hat{g}\left(0, \nu-\Omega-\frac{mT}{\beta_2 z}\right)\right|^2
+\end{equation}
+Notice that the integration along all the space allow us to recall an important property of the impulses: they are of unit energy. Using Parseval identity it is possible to eliminate the impulse waveform in the following way.
+Let us adopt this change of variables:
+\begin{equation}
+	y:= -\frac{mT}{\beta_2 z} \quad \implies \quad dy = \frac{mT}{\beta_2 z^2}
+\end{equation}
+The multiplication by $z_m/z$ creates the term $dy$ along with the other constants:
+\begin{align}
+	X_{0, m, m} &= \int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}} \frac{f(z_m)}{2\pi \beta_2 \Omega}  \Big(-\underbrace{\frac{mT}{\beta_2 z^2} dz}_{dy}\Big) \left|\hat{g}\left(0, \nu-\Omega-\frac{mT}{\beta_2 z}\right)\right|^2 \\
+	&=  \frac{f(z_m)}{ \beta_2 \Omega}\int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}} - \frac{dy}{2\pi} \left|\hat{g}\left(0, \nu-\Omega + y \right)\right|^2
+\end{align}
+If $f(z_m)$ is assumed to be $1$ in perfect amplification scenario, the integrals simplify to
+\begin{equation}
+	=\frac{1}{ \beta_2 \Omega}\int_{\mathbb{R}} \frac{d\nu}{2\pi}  |\hat{g}(0, \nu)|^2 \int_{\mathbb{R}}  \frac{dy}{2\pi} \left|\hat{g}\left(0, \nu-\Omega + y\right)\right|^2
+\end{equation}
+finally, both integrals, by Parseval, sum to 1, so 
+\begin{equation}
+	X_{0, m, m} = \frac{1}{\beta_2 \Omega}  
+\end{equation}
+when $z_m$ falls inside the fiber and in the region of high dispersion, $0$ otherwise.
+
+	\subsection{Criticalities of high dispersion approximation}
+The \textit{generalization} of the above calculation has one major difficulty: in the overlap region the cumulative pulse attenuation $f$ is assumed to be constant.
+If this assumption holds true, the expression generalizes naturally
+\begin{equation}
+	X_{0, m, m} = \frac{f_B(z_m)}{\beta_2 \Omega}	
+\end{equation}
+Otherwise, we may be interested in cases in which interaction can not be assumed as local. 
+Furthermore, the approximation used for highly-dispersed pulses (\ref{eq:papoulis}) is valid for lengths much higher than the dispersion length, and in the region of interest for Raman amplifiers the approximation may not suffice in calculating the XPM coefficient.
+
+Dropping the locality assumption (common Raman amplifiers have complex amplification profiles over hundreds of km), the integral to consider is the one stemming from time-domain analysis \ref{eq:hkm}:
+\begin{equation}\label{eq:0mm}
+	X_{0, m, m} = \int_{z_0}^{L} dz f_B(z) \int_{-\infty}^{\infty} dt |g^{(0)}(z, t)|^2 |g^{(0)}(z, t-mT)|^2
+\end{equation}
+in order to find a suitable computational simplification, let us assume that the pulses are gaussian.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Gaussian pulses} \label{gauss}
+The effect of linear propagation for gaussian pulses has a closed form expression:
+\begin{equation}\label{eq:field}
+	g(z, t) = \frac{U_0 \exp[\frac{i}{2} \arctan(D(z))]}{(1+D^2(z))^{1/4}} \exp\left[-\frac{t^2}{2T_0^2} \frac{1+iD(z)}{1+D^2(z)}\right]
+\end{equation}
+where $D(z) = z\beta_2 / T_0^2$. Some comments on this representation are given in Appendix A.
+
+Assuming pulse energy normalization to 1, amplitude and width parameters need to satisfy the following equation
+\begin{equation}\label{eq:norm}
+	U_0^2T_0 \sqrt{\pi} = 1
+\end{equation}
+
+considering
+\begin{equation*}
+	|g^{(0)}(z, t)|^2 = \dfrac{U_0^2}{(1+D^2(z))^{1/2}}\exp\left[-\dfrac{t^2}{T_0^2} \dfrac{1}{1+D^2(z)}\right] 
+\end{equation*}
+and then substituting the relative expressions in \ref{eq:0mm}, the following expression is given
+
+\begin{equation*}
+	X_{0, m, m} = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}dt \dfrac{U_0^4}{1+D^2(z)} \exp\left[-\dfrac{1}{T_0^2(1+D^2(z))} \underbrace{\left(t^2 + (t-mT-\beta_2\Omega z)^2\right)}_{\varphi}\right]
+\end{equation*}
+Let $s$ be defined as
+\begin{equation*}
+	s := mT+\beta_2\Omega z
+\end{equation*}
+then, the term $\varphi$ can be rewritten as:
+\begin{align*}
+	\varphi &= 2t^2 - 2ts + s^2 \\
+	&= \left(\sqrt{2}t - \dfrac{s}{\sqrt{2}}\right)^2 + \dfrac{s^2}{2}
+\end{align*}
+let us use a change of variable of integration: $\eta := \sqrt{2}t - \frac{s}{\sqrt{2}}$, from which $dz\,dt = dz\,d\eta \frac{1}{\sqrt{2}}$.
+So we have the expression $\varphi = \eta^2 + \frac{s^2}{2}$, and the integral admits this expression
+\begin{equation*}
+	X_{0, m, m} = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}\dfrac{d\eta}{\sqrt{2}}
+	\dfrac{U_0^4}{1+D^2(z)} \exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
+\end{equation*}
+The last step is the assumption of local interaction for $z=z_m=-mT/\beta_2\Omega$. This means that the functions $f_B(z)$ and $D(z)$ can be substituted with constants $f_B(z_m)$ and $D(z_m)$, respectively. 
+We can also extend integration to $\mathbb{R}$, for every $m$ such that $z_m \in [0, L]$.
+Than it is possible to simplify the integral
+\begin{equation*}
+	X_{0, m, m} = f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}}\int_{\mathbb{R}}dz \int_{\mathbb{R}}d\eta
+	\exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
+\end{equation*}
+The remaining equation contains two gaussian integrals
+\begin{equation}
+	\int_{\mathbb{R}}dt \exp\left[-\dfrac{t^2}{\alpha}\right] = \sqrt{\alpha \pi} 
+\end{equation}
+integrating with respect to $\eta$ we obtain
+\begin{equation}
+	f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}} (T_0^2(1+D^2(z_m)))^{\frac{1}{2}}\sqrt{\pi} \int_{\mathbb{R}}dz   \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
+\end{equation}
+
+Finally, using $s$ as a new integration variable
+\begin{equation}
+	s = mT+\beta_2\Omega z  \qquad dz = \dfrac{1}{\beta_2\Omega}ds
+\end{equation}
+it is possible to solve even the last integral as
+\begin{equation}
+	X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} U_0^4 T_0^2 \pi
+\end{equation}
+Recall the normalization condition for the pulse energy in (\ref{eq:norm}): the substitution cancels both parameters $U_0$ and $T_0$ from the final expression
+\begin{equation}\label{eq:solution}
+	X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} \underbrace{U_0^4 T_0^2 \pi}_{=1} = \dfrac{f_B(z_m)}{\beta_2 \Omega}
+\end{equation}
+
+\begin{comment}
+Si noti come questa espressione sia molto simile con quella derivata tramite l'approssimazione di Papoulis \cite[eq. 10]{Dar_2013} (in questo caso abbiamo assunto $z_m \in [0, L]$).
+Inoltre, mentre l'approssimazione originaria è valida solo a partire da una lunghezza di dispersione ($z_0 = \beta_2/T_0^2$), la (\ref{eq:solution}) è valida \textit{sempre} per impulsi gaussiani.
+
+Quanto ottenuto nella (\ref{eq:solution}) fa sospettare che lo stesso risultato sarebbe stato ottenibile usando l'approssimazione in modo esatto. Infatti un aspetto fondamentale del ragionamento in \cite{Dar_2013} è che gli impulsi siano proporzionali e scalati rispetto ai loro \textit{spettri}. Questo per un impulso gaussiano è sempre vero. 
+
+\vspace{20pt}
+Verifichiamo se l'approssimazione vale in modo esatto: scriviamo i campi in dominio del tempo e della frequenza e confrontiamoli con la \cite[eq. 10]{Dar_2013}. Secondo l'Appendice 1, nel dominio del tempo abbiamo questa espressione equivalente
+\begin{align}
+	u(z, t) = U_0 \left(\dfrac{1+iD(z)}{1+D^2(z)}\right)^{\frac{1}{2}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1+iD(z)}{1+D^2(z)}\right]
+\end{align}
+Mentre nel dominio della frequenza si ha (trasformata standard)
+\begin{equation}
+	\hat{u}(z, \omega) = U_0 T_0 \exp\left[-\dfrac{1}{2} \omega^2 (T_0^2 - i\beta_2z)\right]	
+\end{equation}
+ora si sostituisce $\omega \leftarrow \frac{t}{\beta_2z}$ e si ottiene 
+
+\begin{align*}
+	\hat{u}(z, \omega) &= U_0 T_0 \exp\left[-\dfrac{t^2}{2\beta_2^2 z^2} (T_0^2 - i\beta_2z)\right]\\
+	&= U_0 T_0 \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1}{D^2(z)} - i\dfrac{1}{D(z)}\right)\right] \\
+	&= U_0 T_0 \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1-iD(z)}{D^2(z)}\right)\right] 
+\end{align*}
+Osserviamo l'approssimazione
+\begin{equation}
+	u(z, t) \approx \sqrt{\frac{i}{2\pi \beta_2 z}} \underbrace{\exp\left[-i\frac{t^2}{2 \beta_2 z}\right] \hat{u}\left(0, \frac{t}{\beta_2 z}\right)}_{A}
+\end{equation}
+il termine contrassegnato da $A$ risulta
+\begin{equation}
+	A = U_0 T_0 \exp\left[-i\frac{t^2}{2 T_0^2} \dfrac{1}{D(z)}\right]\exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1-iD(z)}{D^2(z)}\right)\right] = U_0 T_0 \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1}{D^2(z)}\right)\right]
+\end{equation}
+
+Quindi dobbiamo verificare la seguente uguaglianza
+\begin{equation}
+	U_0 \sqrt{\dfrac{1+iD(z)}{1+D^2(z)}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1+iD(z)}{1+D^2(z)}\right]  \stackrel{?}{=}  U_0 \sqrt{\frac{i}{2\pi D(z)}} \exp\left[-\dfrac{t^2}{2T_0^2} \left(\dfrac{1}{D^2(z)}\right)\right]
+\end{equation}
+Queste espressioni non sembrano tuttavia combaciare esattamente. Possiamo approssimare il termine di sinistra, per $D(z)>>1$ con
+\begin{equation}
+	U_0 \sqrt{\dfrac{i}{D(z)}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1}{D^2(z)}\right] {\color{darkred} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{i}{D(z)}\right]}
+\end{equation}
+tuttavia si nota che manca un termine $2\pi$ a \textit{denominatore}, e l'esponenziale di fase \textit{scompare} dall'espressione.
+
+\vspace{20pt}
+La conclusione \textit{provvisoria} è che l'approssimazione non vale in maniera esatta, ed anzi la sua validità nel caso gaussiano è da valutare in un'ulteriore analisi.
+\end{comment}
+
+\section{Conclusion}
+
+
+\printbibliography
+
+\section*{Appendix A}
+The field expression in (\ref{eq:field}) contains a phase term in the form $\exp\left[\frac{i}{2} \arctan(D(z)) \right]$. This term highlights the phase and modulus representation of the coefficient of the exponentials.
+However, it may not seem so straightforward. From Fourier antitransform, the field has the following expression
+\begin{equation}
+	u(z, t) = U_0 \left(\dfrac{1+iD(z)}{1+D^2(z)}\right)^{\frac{1}{2}} \exp\left[-\dfrac{t^2}{2T_0^2} \dfrac{1+iD(z)}{1+D^2(z)}\right]
+\end{equation}
+the two field expression are connected by this calculations which uses fundamental goniometric identities
+\begin{align*}
+	&  \exp\left[ \dfrac{i}{2} \arctan(D(z))\right] = \exp\left[ 2i \arctan(D(z))\right]^{\frac{1}{4}}=\\
+	&  =\left[\cos(2\arctan(D(z))) + i \sin(2\arctan(D(z)))\right]^{\frac{1}{4}}=	\\
+	&  =\left[\dfrac{1-t^2}{1+t^2} + i \dfrac{2t}{1+t^2}\right]^{\frac{1}{4}}  =  \qquad \text{where $t=\tan\left(\dfrac{\cancel{2}\arctan(D(z))}{\cancel{2}}\right) = D(z)$} \\
+	& = \left[\dfrac{(1+iD(z))^2}{1+D^2(z)}\right]^{\frac{1}{4}} = \dfrac{(1+iD(z))^{\frac{1}{2}}}{(1+D^2(z))^{\frac{1}{4}}}
+\end{align*}
+
+\end{document}
