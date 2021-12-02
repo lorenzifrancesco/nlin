@@ -35,21 +35,20 @@
 \setlength{\columnsep}{1cm}
 
 \title{Generalization of NLIN model for WDM systems considering fiber attenuation and Raman gain}
-%\author{Francesco Lorenzi}
-%\institute{Dipartimento di Ingegneria dell'Informazione, Università degli studi di Padova}
+\author{Francesco Lorenzi  \vspace{2pt}\\  {\footnotesize Dipartimento di Ingegneria dell'Informazione\\ \vspace{-5pt} Università degli studi di Padova}}
+
 \begin{document}
 \maketitle
 
 
 \begin{abstract}
-Starting from \cite{Dar_2013}, in which a model for NLIN (Nonlinear Interference Noise) is provided in the assumption of perfect amplification, we develop a generalized model for this phenomenon in the presence of wavelength and position-dependent attenuation and Raman gain. This analysis aims to open the possibility to address the optimization problem with respect to noise performance in multi-pump Raman amplifiers, which was a topic studied in \cite{Marcon_2021}.
+Starting from \cite{Dar_2013}, in which a model for NLIN (Nonlinear Interference Noise) is provided in the assumption of perfect amplification, a generalized model is developed for this phenomenon, in the presence of wavelength and position-dependent attenuation and Raman gain. This analysis aims to open the possibility to address the optimization problem with respect to noise performance in multi-pump Raman amplifiers, which was a topic studied in \cite{Marcon_2021}.
 \end{abstract}
 \section{Introduction}
-nonlinear Interference Noise (NLIN) is a phenomenon which is a crucial limit to the performances of modern WDM (Wavelength Division Multiplexing) links. In systems that implement Raman amplification, along with Amplified Stimulated Emission noise (ASE), NLIN is a major subject of interest in determining the noise performance of amplifiers. A time domain model for NLIN is proposed in \cite{Dar_2013}: the model proposes a coefficient of intrachannel interaction which can be used with general modulation schemes. However, in this work, the nonlinear interaction is modeled assuming a \textit{perfect amplification}, which means that the coefficient of Raman amplification $g(z)$ is identically equal to $\alpha$, and this relationship holds for \textit{every} WDM channel.
+NLIN is a phenomenon which is a crucial limit to the performances of modern WDM (Wavelength Division Multiplexing) links. In systems that implement Raman amplification, along with Amplified Stimulated Emission noise (ASE), NLIN is a major subject of interest in determining the noise performance of amplifiers. A time domain model for NLIN is proposed in \cite{Dar_2013}: the model defines a coefficient of intrachannel interaction which can be used with general modulation schemes. However, in this work, the nonlinear interaction is modeled assuming a \textit{perfect amplification}, which means that the coefficient of Raman amplification $g(z)$ is identically equal to $\alpha$, and this relationship holds for \textit{every} WDM channel.
 In order to drop this assumption, it is required to develop a slight modification of the model.
 
-The aim of the article is twofold: in the first place is to generalize the model proposed in \cite{Dar_2013} to generic Raman gain and attenuation scenarios: the goal is to derive an expression for the XPM (Cross Phase Modulation) coefficient $X_{0, m, m}$ similar to the one in \cite{Dar_2013}, identifying the similarities and the differences of the two approaches.
-In second place, the aim is to shed light on some mathematical aspects of the problem that may result not straightforward.
+The aim of the article is to generalize the proposed model to generic Raman gain and attenuation scenarios: in particular the goal is to derive a convenient expression for the XPM (Cross Phase Modulation) coefficient $X_{0, m, m}$ similar to the one in \cite{Dar_2013}, studying the similarities and the differences of the two approaches.
 
 In section \ref{previous} a review of past work is given along with some comments on notation and methods that are useful for the rest of the article.
 In section \ref{framework} we develop a new framework in which it is possible to generalize the analysis done in past works to scenarios in which wavelength and position dependent Raman gain and attenuation are present.
@@ -161,10 +160,6 @@ As in \cite{Dar_2013}, we define the operator of linear propagation for channel 
 \begin{equation}
 	\mathbf{U}_A(z) = \exp\left[i \frac{\beta_2}{2} z \frac{\partial^2}{\partial t^2}\right].
 \end{equation}
-So the channel $A$ propagated $0^{th}$ order impulse have this alternative expression:
-\begin{equation}
- g^{(0)}(z, t-kT) = \mathbf{U_A}(z) g(0, t-kT).
-\end{equation}
 
 \subsection{Generalization of first order perturbation theory}
 The splitting in two of the equation allow us to analyze separately the effects of SPM and XPM in a natural way.
@@ -194,12 +189,11 @@ Recall that $\mathbf{U}_A$ is unitary, so it holds
 	\mathbf{U}_A(L-z) g^{(0)*}(L, t) = g^{(0)*}(z, t)
 \end{equation}
 
-Using this identity, the expression for the error can be written as:
+Using this identity, the expression for the error can be written as\footnote{Notice that, being that the two fibers linear propagation terms are different, the substitution described in equation (\ref{eq:subs}) is only valid because filter matching is done considering the propagated symbol waveform over channel $A$.}:
 \begin{equation}
 	\Delta a_0 = i\gamma \int_{z_0}^{L} dz \int_{-\infty}^{\infty} dt g^{(0)*}(z, t) \left(f_A(z)|u_A^{(0)}|^2 + 2 \dfrac{f_A(z)}{f_B(z)}|u_B^{(0)}|^2\right) u_A^{(0)}
 \end{equation}
-By substituting the modulation of choice as in \ref{eq:modulation}, we get an expression ready to be computed with respect to a given modulation format
-Notice that, being that the two fibers linear propagation terms are different, the substitution described in equation (\ref{eq:subs}) is only valid because matching is done considering the propagated symbol waveform over channel $A$.
+By substituting the modulation of choice as in (\ref{eq:modulation}), we get an expression ready to be computed with respect to a given modulation format.
 Finally, substituting the modulation and using the same notation as \cite[eq. 5, 6, 7]{Dar_2013}, the resulting expression is
 \begin{equation}
 	\Delta a_0 = i \gamma \sum_{h, k, m} \left(a_h a_k^* a_m S_{h, k, m} + 2 a_h b_k^* b_m X_{h, k, m}\right)
@@ -328,7 +322,7 @@ Now, it is possible to compute the coefficient $X_{0, m, m}$ through energy inte
 \begin{equation}
 	X_{0, m, m} = \int_{z_0}^{L} dz f(z) \int_{\mathbb{R}} \frac{d\nu}{4\pi^2 \beta_2 z} |\hat{g}(0, \nu)|^2 \left|\hat{g}\left(0, \nu-\Omega-\frac{mT}{\beta_2 z}\right)\right|^2
 \end{equation}
-The approximation is that the strongest overlap happens at $z_m = -\frac{mT}{\beta_2 \Omega}$
+The approximation is that the strongest overlap happens at $z_m = -\frac{mT}{\beta_2 \Omega}$.
 By the \textit{perfect amplification} hypotesis, it is assumed that $f(z) \equiv 1$. A further assumption is made claiming that most of the overlap happens at $z=z_m$, so the integrand is non negligible only when $z_m/z \approx 1$. 
 The integral becomes
 \begin{equation}
@@ -361,9 +355,10 @@ If this assumption holds true, the expression generalizes naturally
 	X_{0, m, m} = \frac{f_B(z_m)}{\beta_2 \Omega}	
 \end{equation}
 Otherwise, we may be interested in cases in which interaction can not be assumed as local. 
-Furthermore, the approximation used for highly-dispersed pulses (\ref{eq:papoulis}) is valid for lengths higher than the dispersion length, and in the region of interest for Raman amplifiers the approximation may not suffice in calculating the XPM coefficient, as they employ relatively short fibers.
 
-Dropping the locality assumption (common Raman amplifiers have fast varying amplification profiles over hundreds of km), the integral to consider is the one stemming from time domain analysis (\ref{eq:hkm}):
+Furthermore, the approximation used for highly-dispersed pulses (\ref{eq:papoulis}) is valid for lengths higher than the dispersion length, and in the region of interest for Raman amplifiers the approximation may not suffice in calculating the XPM coefficient, as they employ relatively short fibers. The order of on the order of $10^2$km, whereas, for $\beta_2 = -4$ps$^2$km$^{-1}$, and $T_0 = 100$ps, the dispersion length is $L_D = 2500$km.
+
+Dropping the high dispersion approximation, the integral to consider is the one stemming from time domain analysis (\ref{eq:hkm}):
 \begin{equation}\label{eq:0mm}
 	X_{0, m, m} = \int_{0}^{L} dz f_B(z) \int_{-\infty}^{\infty} dt |g^{(0)}(z, t)|^2 |g^{(0)}(z, t-mT-\beta_2 \Omega z)|^2.
 \end{equation}
@@ -380,12 +375,7 @@ Assuming pulse energy normalization to 1, amplitude and width parameters need to
 \begin{equation}\label{eq:normie}
 	U_0^2T_0 \sqrt{\pi} = 1
 \end{equation}
-
-considering
-\begin{equation}
-	|g^{(0)}(z, t)|^2 = \dfrac{U_0^2}{(1+D^2(z))^{1/2}}\exp\left[-\dfrac{t^2}{T_0^2} \dfrac{1}{1+D^2(z)}\right] 
-\end{equation}
-and then substituting the relative expressions in \ref{eq:0mm}, the following expression is given
+substituting the relative expressions in (\ref{eq:0mm}), the following expression is given
 
 \begin{equation}
 	X_{0, m, m} = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}dt \dfrac{U_0^4}{1+D^2(z)} \exp\left[-\dfrac{1}{T_0^2(1+D^2(z))} \underbrace{\left(t^2 + (t-mT-\beta_2\Omega z)^2\right)}_{\varphi}\right]
@@ -439,9 +429,9 @@ Recall the normalization condition for the pulse energy in (\ref{eq:normie}): th
 	X_{0, m, m} = \dfrac{1}{\beta_2 \Omega} \underbrace{U_0^4 T_0^2 \pi}_{=1} = \dfrac{1}{\beta_2 \Omega}.
 \end{equation}
 
-The procedure in equations (\ref{pa-first} - \ref{pa-last}) assumes that borders effects and non-perfect amplification profiles are neglected, which in Raman amplifiers are not reasonable assumptions. Nonetheless the expression in \ref{pa-last} is interesting in which it sheds some light into the approximation \cite[eq. 10]{Dar_2013}. In fact, Gaussian pulses have Gaussian spectrum, and the approximation works because of this property.
+The procedure in equations (\ref{pa-first} - \ref{pa-last}) assumes that borders effects and non-perfect amplification profiles are neglected, which in Raman amplifiers are not reasonable assumptions. Nonetheless the expression in (\ref{pa-last}) is interesting in which it sheds some light into the approximation \cite[eq. 10]{Dar_2013}. In fact, Gaussian pulses have Gaussian spectrum, and the approximation works because of this property.
 
-\section{Computation of spatial integral}
+\section{Computation of spatial integral}\label{computation}
 The generalization procedure, in the Gaussian pulse approximatiton lead to the simplified integral in equation (\ref{THE_INTEGRAL}). In order to setup the integration technique, it is possible to notice that only some indexes $m$ are to be considered as valid collision in a short fiber such as the one of interest for the amplifier. By using a threshold on the pulse collision energy (normalized to 1), it is possible to select only the desired $m$, and to filter out all the $m$ that give place to weak interaction. Let $0<\xi<1$ be such threshold. Let $M$ be the set of the $m$ values to be considered. The computation of $M$ is complicated, because of the very definition of $\xi$, which involves the actual computation of the integral
 \begin{equation}
 	M = \bigg\{ m \quad \bigg| \quad \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0 \beta_2 \Omega}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L} dz f_B(z) \exp\left[-\dfrac{(mT+\beta_2\Omega z)^2}{2T_0^2(1+D^2(z_m))} \right] \geq \xi \bigg\}
@@ -452,9 +442,9 @@ By normalizing the Gaussian and computing the upper and lower extreme of integra
 \begin{equation}
 	\epsilon = \sqrt{\dfrac{2}{\pi}} \dfrac{(1+D^2(z_m))^\frac{1}{2}}{U_0^4 T_0 \beta_2 \Omega} \xi
 \end{equation}
-it is possible to obtain a trascendental condition on $m$ to be solved simply using some solver or by table lookup
+it is possible to obtain a trascendental condition on $m$ to be solved simply using some solver or by table lookup. The alternative, simplified condition is
 \begin{equation}
-	M' = \bigg\{ m  \quad \bigg| \quad \dfrac{1}{2} \left[\Phi \left(\dfrac{mT + \beta_2 \Omega L}{\sqrt{2} T_0 (1+D^2(z_m))^\frac{1}{2} }\right) - \Phi\left(\dfrac{mT}{\sqrt{2} T_0 (1+D^2(z_m))^\frac{1}{2} } \right) \right] > \epsilon \bigg\}
+		 \dfrac{1}{2} \left[\Phi \left(\dfrac{mT + \beta_2 \Omega L}{\sqrt{2} T_0 (1+D^2(z_m))^\frac{1}{2} }\right) - \Phi\left(\dfrac{mT}{\sqrt{2} T_0 (1+D^2(z_m))^\frac{1}{2} } \right) \right] > \epsilon
 \end{equation}
 where $\Phi$ is the Gaussian error function.
 This approximation must be validated, but it is a good starting point to understand the behaviour of the interactions.
