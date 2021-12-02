@@ -52,15 +52,12 @@ The aim of the article is twofold: in the first place is to generalize the model
 In second place, the aim is to shed light on some mathematical aspects of the problem that may result not straightforward.
 
 In section \ref{previous} a review of past work is given along with some comments on notation and methods that are useful for the rest of the article.
-
 In section \ref{framework} we develop a new framework in which it is possible to generalize the analysis done in past works to scenarios in which wavelength and position dependent Raman gain and attenuation are present.
-
 %In section \ref{link} the new framework is compared to the old one and some linking formulas are given for clarity.
-
 In order to compute the XPM coefficient of interest, in section \ref{approx} the approximation developed in \cite{Dar_2013} is considered, and its limits are described.
-To circumvent these limitations, in section \ref{gauss} the computation are done in the gaussian pulses hypotesis, which allow a simplification of original expression of the coefficient.
-
-Appendices are given to clarify the mathematical aspects of the generalization.
+To circumvent these limitations, in section \ref{gauss} the computation are done in the Gaussian pulses hypotesis, which allow a simplification of original expression of the coefficient.
+Finally, in section \ref{computation} some comments are give on the numerical computation of the expression in the Gaussian pulses scenario.
+An appendix is given to clarify mathematical aspects of the generalization.
 
 %==============================================
 
@@ -123,10 +120,14 @@ Let $A$ be the WDM channel of interest, and $B$ the interfering one.
 Let us now proceed in normalizing the fields $A_A$, $A_B$ with the respective normalization functions $\psi_A$, $\psi_B$, as described in the rescaling equation (\ref{ss:rescaling}).
 In addition, a moving time reference frame is assumed, taking as a reference the time of arrival of the first pulse in channel $A$: \textit{from this point, until the end of the article, the variable $t$ indicates the normalized time.}\\
 These passages lead to:
-\begin{align}\label{eq:u}
-    \frac{\partial}{\partial z} u_A &= \qquad \qquad \quad \; - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_A + i \gamma \left(f_A(z)|u_A|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B|^2 \right)u_A \\
-    \frac{\partial}{\partial z} u_B &= - \Delta \beta_1 \frac{\partial}{\partial t} u_B - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_B + i \gamma \left(f_B(z)|u_B|^2 +2 \frac{f_B(z)}{f_A(z)}|u_A|^2\right)u_B \\
-\end{align}
+\begin{alignat}{1}\label{eq:u}
+	\begin{aligned}
+		\frac{\partial}{\partial z} u_A &= \qquad \qquad \quad \; - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_A + i \gamma \left(f_A(z)|u_A|^2 + 2 \frac{f_A(z)}{f_B(z)} |u_B|^2 \right)u_A
+	\end{aligned}\\
+	\begin{aligned}
+		\frac{\partial}{\partial z} u_B &= - \Delta \beta_1 \frac{\partial}{\partial t} u_B - i \frac{\beta_2}{2} \frac{\partial^2}{\partial t^2} u_B + i \gamma \left(f_B(z)|u_B|^2 +2 \frac{f_B(z)}{f_A(z)}|u_A|^2\right)u_B
+	\end{aligned}
+\end{alignat}
 where $\Delta \beta_1 = \beta_{1B} - \beta_{1A} = \beta_2 \Omega$. \\
 Following \cite{Dar_2013}, a first order perturbation analysis is proposed for these equations.
 
@@ -195,7 +196,7 @@ Recall that $\mathbf{U}_A$ is unitary, so it holds
 
 Using this identity, the expression for the error can be written as:
 \begin{equation}
-	\Delta a_0 = i\gamma \int_{z_0}^{L} dz \int_{-\infty}^{\infty} dt g^{(0)*}(z, t) \left(f_A(z)|u_A^{(0)}|^2 + 2 f_B(z)|u_B^{(0)}|^2\right) u_A^{(0)}
+	\Delta a_0 = i\gamma \int_{z_0}^{L} dz \int_{-\infty}^{\infty} dt g^{(0)*}(z, t) \left(f_A(z)|u_A^{(0)}|^2 + 2 \dfrac{f_A(z)}{f_B(z)}|u_B^{(0)}|^2\right) u_A^{(0)}
 \end{equation}
 By substituting the modulation of choice as in \ref{eq:modulation}, we get an expression ready to be computed with respect to a given modulation format
 Notice that, being that the two fibers linear propagation terms are different, the substitution described in equation (\ref{eq:subs}) is only valid because matching is done considering the propagated symbol waveform over channel $A$.
@@ -336,7 +337,7 @@ The integral becomes
 Notice that the integration along all the space allow us to recall an important property of the impulses: they are of unit energy. Using Parseval identity it is possible to eliminate the impulse waveform in the following way.
 Let us adopt this change of variables:
 \begin{equation}
-	y:= -\frac{mT}{\beta_2 z} \quad \implies \quad dy = \frac{mT}{\beta_2 z^2}
+	y:= -\frac{mT}{\beta_2 z} 
 \end{equation}
 The multiplication by $z_m/z$ creates the term $dy$ along with the other constants:
 \begin{align}
@@ -366,10 +367,10 @@ Dropping the locality assumption (common Raman amplifiers have fast varying ampl
 \begin{equation}\label{eq:0mm}
 	X_{0, m, m} = \int_{0}^{L} dz f_B(z) \int_{-\infty}^{\infty} dt |g^{(0)}(z, t)|^2 |g^{(0)}(z, t-mT-\beta_2 \Omega z)|^2.
 \end{equation}
-In order to find a suitable computational simplification, let us assume that the pulses are gaussian.
+In order to find a suitable computational simplification, let us assume that the pulses are Gaussian.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Gaussian pulses} \label{gauss}
-The effect of linear propagation for gaussian pulses has a closed form expression:
+The effect of linear propagation for Gaussian pulses has a closed form expression:
 \begin{equation}\label{eq:field}
 	g(z, t) = \frac{U_0 \exp[\frac{i}{2} \arctan(D(z))]}{(1+D^2(z))^{1/4}} \exp\left[-\frac{t^2}{2T_0^2} \frac{1+iD(z)}{1+D^2(z)}\right]
 \end{equation}
@@ -404,41 +405,63 @@ So we have the expression $\varphi = \eta^2 + \frac{s^2}{2}$, and the integral a
 	X_{0, m, m} = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}\dfrac{d\eta}{\sqrt{2}}
 	\dfrac{U_0^4}{1+D^2(z)} \exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
 \end{equation}
-The last step is the assumption of local interaction for $z=z_m=-mT/\beta_2\Omega$. This means that the functions $f_B(z)$ and $D(z)$ can be substituted with constants $f_B(z_m)$ and $D(z_m)$, respectively. This is justified also by numerical simulations with usual Raman amplifiers parameters: they show that this approximation usually gives integrals with relative error $<1\%$. 
+The last step is the assumption of local interaction for $z=z_m=-mT/\beta_2\Omega$. This means that the function $D(z)$ can be substituted with constant $D(z_m)$. This is justified also by numerical simulations with usual Raman amplifiers parameters: they show that this approximation usually gives integrals with relative error $<1\%$. 
 We can also extend integration to $\mathbb{R}$, for every $m$ such that $z_m \in [0, L]$, if we assume to neglect border effects.
 Than it is possible to simplify the integral
 \begin{equation}
-	X_{0, m, m} = f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}}\int_{\mathbb{R}}dz \int_{\mathbb{R}}d\eta
-	\exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right].
+	\dfrac{1}{\sqrt{2}} \dfrac{U_0^4}{1+D^2(z_m)}  \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}d\eta
+	\exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z_m))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z_m))} \right].
 \end{equation}
-The remaining equation contains two gaussian integrals
+The remaining equation contains two Gaussian integrals
 \begin{equation}
 	\int_{\mathbb{R}}dt \exp\left[-\dfrac{t^2}{\alpha}\right] = \sqrt{\alpha \pi} 
 \end{equation}
 integrating with respect to $\eta$ we obtain
 \begin{equation}
-	f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}} (T_0^2(1+D^2(z_m)))^{\frac{1}{2}}\sqrt{\pi} \int_{\mathbb{R}}dz   \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right].
+	\sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L} dz f_B(z) \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z_m))} \right]
 \end{equation}
-Using $s$ as a new integration variable
+and finally, expressing the dependency of $s$ from $z$, 
+\begin{equation}\label{THE_INTEGRAL}
+	X_{0, m, m} = \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L} dz f_B(z) \exp\left[-\dfrac{(mT+\beta_2\Omega z)^2}{2T_0^2(1+D^2(z_m))} \right]
+\end{equation} 
+At this point, there is no possibility to find a general analytical solution to the integral. In fact, different Raman amplification schemes give different functions $f_B$, and the analysis must be done separately on each of them. 
+Still, let us explore the case in which there is \textit{perfect amplification}: the final result is interesting as the result is the same as the one given by the high dispersion approximation. In this hypotesis, $f_B \equiv 1$, and the coefficient is computed as
+\begin{equation}\label{pa-first}
+	\sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L}dz \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z_m))} \right].
+\end{equation}
+which contains a truncated Gaussian integral. If we further assume that the contribution to the integral is negligible out of the range $[0, L]$, this integral has simple analytical solution.
+Using $s$ as a new integration variable it is possible to solve as
 \begin{equation}
-	s = mT+\beta_2\Omega z  \qquad dz = \dfrac{1}{\beta_2\Omega}ds
+	\sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{\mathbb{R}} \dfrac{ds}{\beta_2 \Omega} \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z_m))} \right] = \dfrac{1}{\beta_2 \Omega} U_0^4 T_0^2 \pi.
 \end{equation}
-it is possible to solve even the last integral as
-\begin{equation}
-	X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} U_0^4 T_0^2 \pi.
-\end{equation}
-Recall the normalization condition for the pulse energy in (\ref{eq:normie}): the substitution cancels both parameters $U_0$ and $T_0$ from the final expression
-\begin{equation}\label{eq:solution_2}
-	X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} \underbrace{U_0^4 T_0^2 \pi}_{=1} = \dfrac{f_B(z_m)}{\beta_2 \Omega}
+Recall the normalization condition for the pulse energy in (\ref{eq:normie}): the substitution cancels both parameters $U_0$ and $T_0$ from the final expression, so
+\begin{equation}\label{pa-last}
+	X_{0, m, m} = \dfrac{1}{\beta_2 \Omega} \underbrace{U_0^4 T_0^2 \pi}_{=1} = \dfrac{1}{\beta_2 \Omega}.
 \end{equation}
 
-The procedure assumes that borders effect are neglected, which in Raman amplifiers may not be a reasonable assumption.
-Nonetheless, even with dropping this assumption, the necessary numerical integration is simplified as the time integral is computed analytically anyhow. 
+The procedure in equations (\ref{pa-first} - \ref{pa-last}) assumes that borders effects and non-perfect amplification profiles are neglected, which in Raman amplifiers are not reasonable assumptions. Nonetheless the expression in \ref{pa-last} is interesting in which it sheds some light into the approximation \cite[eq. 10]{Dar_2013}. In fact, Gaussian pulses have Gaussian spectrum, and the approximation works because of this property.
+
+\section{Computation of spatial integral}
+The generalization procedure, in the Gaussian pulse approximatiton lead to the simplified integral in equation (\ref{THE_INTEGRAL}). In order to setup the integration technique, it is possible to notice that only some indexes $m$ are to be considered as valid collision in a short fiber such as the one of interest for the amplifier. By using a threshold on the pulse collision energy, it is possible to select only the desired $m$, and to filter out all the $m$ that give place to weak interaction. Let $\xi$ be such threshold. Let $M$ be the set of the $m$ values to be considered. The computation of $M$ is complicated, because of the very definition of $\xi$, which involves the actual computation of the integral
+\begin{equation}
+	M = \bigg\{ m \quad \bigg| \quad \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L} dz f_B(z) \exp\left[-\dfrac{(mT+\beta_2\Omega z)^2}{2T_0^2(1+D^2(z_m))} \right] \geq \xi \bigg\}
+\end{equation}
+Since we are only concerned about the selection of the $m$, one possible approximation is to discard the contribution of $f_B(z)$. This assumption is coherent if inter-collision spacing is sufficiently small.
+By normalizing the Gaussian and computing the upper and lower extreme of integration with respect to the Gaussian peak, and considering 
+\begin{equation}
+	\epsilon = \sqrt{\dfrac{2}{\pi}} \dfrac{(1+D^2(z_m))^\frac{1}{2}}{U_0^4 T_0 \beta_2 \Omega} \xi
+\end{equation}
+it is possible to obtain a trascendental condition on $m$ to be solved simply using some solver or by table lookup
+\begin{equation}
+	M' = \bigg\{ m  \quad \bigg| \quad \dfrac{1}{2} \left[\Phi \left(\dfrac{mT + \beta_2 \Omega L}{\sqrt{2} T_0 (1+D^2(z_m))^\frac{1}{2} }\right) - \Phi\left(\dfrac{mT}{\sqrt{2} T_0 (1+D^2(z_m))^\frac{1}{2} } \right) \right] > \epsilon \bigg\}
+\end{equation}
+where $\Phi$ is the Gaussian error function.
+This approximation must be validated, but it is a good starting point to understand the behaviour of the interactions.
 \begin{comment}
 Si noti come questa espressione sia molto simile con quella derivata tramite l'approssimazione di Papoulis \cite[eq. 10]{Dar_2013} (in questo caso abbiamo assunto $z_m \in [0, L]$).
-Inoltre, mentre l'approssimazione originaria è valida solo a partire da una lunghezza di dispersione ($z_0 = \beta_2/T_0^2$), la (\ref{eq:solution}) è valida \textit{sempre} per impulsi gaussiani.
+Inoltre, mentre l'approssimazione originaria è valida solo a partire da una lunghezza di dispersione ($z_0 = \beta_2/T_0^2$), la (\ref{eq:solution}) è valida \textit{sempre} per impulsi Gaussiani.
 
-Quanto ottenuto nella (\ref{eq:solution}) fa sospettare che lo stesso risultato sarebbe stato ottenibile usando l'approssimazione in modo esatto. Infatti un aspetto fondamentale del ragionamento in \cite{Dar_2013} è che gli impulsi siano proporzionali e scalati rispetto ai loro \textit{spettri}. Questo per un impulso gaussiano è sempre vero. 
+Quanto ottenuto nella (\ref{eq:solution}) fa sospettare che lo stesso risultato sarebbe stato ottenibile usando l'approssimazione in modo esatto. Infatti un aspetto fondamentale del ragionamento in \cite{Dar_2013} è che gli impulsi siano proporzionali e scalati rispetto ai loro \textit{spettri}. Questo per un impulso Gaussiano è sempre vero. 
 
 \vspace{20pt}
 Verifichiamo se l'approssimazione vale in modo esatto: scriviamo i campi in dominio del tempo e della frequenza e confrontiamoli con la \cite[eq. 10]{Dar_2013}. Secondo l'Appendice 1, nel dominio del tempo abbiamo questa espressione equivalente
@@ -476,11 +499,11 @@ Queste espressioni non sembrano tuttavia combaciare esattamente. Possiamo appros
 tuttavia si nota che manca un termine $2\pi$ a \textit{denominatore}, e l'esponenziale di fase \textit{scompare} dall'espressione.
 
 \vspace{20pt}
-La conclusione \textit{provvisoria} è che l'approssimazione non vale in maniera esatta, ed anzi la sua validità nel caso gaussiano è da valutare in un'ulteriore analisi.
+La conclusione \textit{provvisoria} è che l'approssimazione non vale in maniera esatta, ed anzi la sua validità nel caso Gaussiano è da valutare in un'ulteriore analisi.
 \end{comment}
 
 \section{Conclusion}
-In order to generalize the NLIN model, a coupled NLSE model was adopted, by redefining signal and interferent field. This formulation, when applied to the analysis of NLIN on a symbol, gives SPM and XPM coefficients of interaction which are very similar to the one in \cite{Dar_2013}. In order to compute the coefficient for XPM, the approximation proposed in \cite{Dar_2013} was studied, but it is unfit in the case of Raman amplifiers. So, in order to find a suitable simplification of time domain non approximated integrals, the assumption of gaussian pulses was examinated. This last analysis, along with local interaction approximation, lead to the direct analytical computation of one of the two integrals. The last integral can be computed numerically including border effects, or can be approximated by extending the domain of integration and gives an analytical expression similar to the one obtained after the approximation for high dispersion in \cite{Dar_2013}.
+In order to generalize the NLIN model, a coupled NLSE model was adopted, by redefining signal and interferent field. This formulation, when applied to the analysis of NLIN on a symbol, gives SPM and XPM coefficients of interaction which are very similar to the one in \cite{Dar_2013}. In order to compute the coefficient for XPM, the approximation proposed in \cite{Dar_2013} was studied, but it is unfit in the case of Raman amplifiers. So, in order to find a suitable simplification of time domain non approximated integrals, the assumption of Gaussian pulses was examinated. This last analysis, along with local interaction approximation, lead to the direct analytical computation of one of the two integrals. The last integral can be computed numerically including border effects, or can be approximated by extending the domain of integration and gives an analytical expression similar to the one obtained after the approximation for high dispersion in \cite{Dar_2013}.
 
 \printbibliography
 
