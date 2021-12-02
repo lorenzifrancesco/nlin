@@ -442,12 +442,13 @@ Recall the normalization condition for the pulse energy in (\ref{eq:normie}): th
 The procedure in equations (\ref{pa-first} - \ref{pa-last}) assumes that borders effects and non-perfect amplification profiles are neglected, which in Raman amplifiers are not reasonable assumptions. Nonetheless the expression in \ref{pa-last} is interesting in which it sheds some light into the approximation \cite[eq. 10]{Dar_2013}. In fact, Gaussian pulses have Gaussian spectrum, and the approximation works because of this property.
 
 \section{Computation of spatial integral}
-The generalization procedure, in the Gaussian pulse approximatiton lead to the simplified integral in equation (\ref{THE_INTEGRAL}). In order to setup the integration technique, it is possible to notice that only some indexes $m$ are to be considered as valid collision in a short fiber such as the one of interest for the amplifier. By using a threshold on the pulse collision energy, it is possible to select only the desired $m$, and to filter out all the $m$ that give place to weak interaction. Let $\xi$ be such threshold. Let $M$ be the set of the $m$ values to be considered. The computation of $M$ is complicated, because of the very definition of $\xi$, which involves the actual computation of the integral
+The generalization procedure, in the Gaussian pulse approximatiton lead to the simplified integral in equation (\ref{THE_INTEGRAL}). In order to setup the integration technique, it is possible to notice that only some indexes $m$ are to be considered as valid collision in a short fiber such as the one of interest for the amplifier. By using a threshold on the pulse collision energy (normalized to 1), it is possible to select only the desired $m$, and to filter out all the $m$ that give place to weak interaction. Let $0<\xi<1$ be such threshold. Let $M$ be the set of the $m$ values to be considered. The computation of $M$ is complicated, because of the very definition of $\xi$, which involves the actual computation of the integral
 \begin{equation}
-	M = \bigg\{ m \quad \bigg| \quad \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L} dz f_B(z) \exp\left[-\dfrac{(mT+\beta_2\Omega z)^2}{2T_0^2(1+D^2(z_m))} \right] \geq \xi \bigg\}
+	M = \bigg\{ m \quad \bigg| \quad \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0 \beta_2 \Omega}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L} dz f_B(z) \exp\left[-\dfrac{(mT+\beta_2\Omega z)^2}{2T_0^2(1+D^2(z_m))} \right] \geq \xi \bigg\}
 \end{equation}
-Since we are only concerned about the selection of the $m$, one possible approximation is to discard the contribution of $f_B(z)$. This assumption is coherent if inter-collision spacing is sufficiently small.
-By normalizing the Gaussian and computing the upper and lower extreme of integration with respect to the Gaussian peak, and considering 
+Since we are only concerned about the selection of the $m$, one possible approximation is to discard the contribution of $f_B(z)$.
+This assumption is coherent if inter-collision spacing is sufficiently small.
+By normalizing the Gaussian and computing the upper and lower extreme of integration with respect to the Gaussian peak, and considering a new normalized threshold, which is related to the normalized pulse energy
 \begin{equation}
 	\epsilon = \sqrt{\dfrac{2}{\pi}} \dfrac{(1+D^2(z_m))^\frac{1}{2}}{U_0^4 T_0 \beta_2 \Omega} \xi
 \end{equation}
