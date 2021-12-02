@@ -42,7 +42,7 @@
 
 
 \begin{abstract}
-Starting from \cite{Dar_2013}, in which a model for NLIN (nonlinear Interference Noise) is provided in the assumption of perfect amplification, we develop a generalized model for this phenomenon in the presence of wavelength and position-dependent attenuation and Raman gain. This analysis aims to open the possibility to address the optimization problem with respect to noise performance in multi-pump Raman amplifiers, which was a work already 
+Starting from \cite{Dar_2013}, in which a model for NLIN (Nonlinear Interference Noise) is provided in the assumption of perfect amplification, we develop a generalized model for this phenomenon in the presence of wavelength and position-dependent attenuation and Raman gain. This analysis aims to open the possibility to address the optimization problem with respect to noise performance in multi-pump Raman amplifiers, which was a topic studied in \cite{Marcon_2021}.
 \end{abstract}
 \section{Introduction}
 nonlinear Interference Noise (NLIN) is a phenomenon which is a crucial limit to the performances of modern WDM (Wavelength Division Multiplexing) links. In systems that implement Raman amplification, along with Amplified Stimulated Emission noise (ASE), NLIN is a major subject of interest in determining the noise performance of amplifiers. A time domain model for NLIN is proposed in \cite{Dar_2013}: the model proposes a coefficient of intrachannel interaction which can be used with general modulation schemes. However, in this work, the nonlinear interaction is modeled assuming a \textit{perfect amplification}, which means that the coefficient of Raman amplification $g(z)$ is identically equal to $\alpha$, and this relationship holds for \textit{every} WDM channel.
@@ -481,8 +481,11 @@ La conclusione \textit{provvisoria} è che l'approssimazione non vale in maniera
 
 \section{Conclusion}
 In order to generalize the NLIN model, a coupled NLSE model was adopted, by redefining signal and interferent field. This formulation, when applied to the analysis of NLIN on a symbol, gives SPM and XPM coefficients of interaction which are very similar to the one in \cite{Dar_2013}. In order to compute the coefficient for XPM, the approximation proposed in \cite{Dar_2013} was studied, but it is unfit in the case of Raman amplifiers. So, in order to find a suitable simplification of time domain non approximated integrals, the assumption of gaussian pulses was examinated. This last analysis, along with local interaction approximation, lead to the direct analytical computation of one of the two integrals. The last integral can be computed numerically including border effects, or can be approximated by extending the domain of integration and gives an analytical expression similar to the one obtained after the approximation for high dispersion in \cite{Dar_2013}.
+
 \printbibliography
+
 \hrulefill
+
 \section*{Appendix A}
 The field expression in (\ref{eq:field}) contains a phase term in the form $\exp\left[\frac{i}{2} \arctan(D(z)) \right]$. This term highlights the phase and modulus representation of the coefficient of the exponentials.
 However, it may not seem so straightforward. From Fourier antitransform, the field has the following expression
