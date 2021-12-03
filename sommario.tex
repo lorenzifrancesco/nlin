@@ -395,8 +395,10 @@ So we have the expression $\varphi = \eta^2 + \frac{s^2}{2}$, and the integral a
 	X_{0, m, m} = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}\dfrac{d\eta}{\sqrt{2}}
 	\dfrac{U_0^4}{1+D^2(z)} \exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
 \end{equation}
-The last step is the assumption of local interaction for $z=z_m=-mT/\beta_2\Omega$. This means that the function $D(z)$ can be substituted with constant $D(z_m)$. This is justified also by numerical simulations with usual Raman amplifiers parameters: they show that this approximation usually gives integrals with relative error $<1\%$. 
-We can also extend integration to $\mathbb{R}$, for every $m$ such that $z_m \in [0, L]$, if we assume to neglect border effects.
+
+\subsection{Local interaction approximation}
+The last step in the simplification procedure is the assumption of local interaction for $z=z_m=-mT/\beta_2\Omega$. This means that the function $D(z)$ can be substituted with constant $D(z_m)$. This is justified also by numerical simulations with usual Raman amplifiers parameters: they show that this approximation usually gives integrals with relative error $<1\%$. 
+We can also extend integration to $\mathbb{R}$, for every $m$ such that $z_m \in [0, L]$, if we assume to neglect partial collisions at the borders.
 Than it is possible to simplify the integral
 \begin{equation}
 	\dfrac{1}{\sqrt{2}} \dfrac{U_0^4}{1+D^2(z_m)}  \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}d\eta
@@ -438,7 +440,7 @@ The generalization procedure, in the Gaussian pulse approximatiton lead to the s
 \end{equation}
 Since we are only concerned about the selection of the $m$, one possible approximation is to discard the contribution of $f_B(z)$.
 This assumption is coherent if inter-collision spacing is sufficiently small.
-By normalizing the Gaussian and computing the upper and lower extreme of integration with respect to the Gaussian peak, and considering a new normalized threshold, which is related to the normalized pulse energy
+By normalizing the Gaussian and computing the upper and lower extreme of integration with respect to the Gaussian peak, and considering a new normalized threshold, which is related to the pulse energy by
 \begin{equation}
 	\epsilon = \sqrt{\dfrac{2}{\pi}} \dfrac{(1+D^2(z_m))^\frac{1}{2}}{U_0^4 T_0 \beta_2 \Omega} \xi
 \end{equation}
@@ -494,7 +496,7 @@ La conclusione \textit{provvisoria} è che l'approssimazione non vale in maniera
 \end{comment}
 
 \section{Conclusion}
-In order to generalize the NLIN model, a coupled NLSE model was adopted, by redefining signal and interferent field. This formulation, when applied to the analysis of NLIN on a symbol, gives SPM and XPM coefficients of interaction which are very similar to the one in \cite{Dar_2013}. In order to compute the coefficient for XPM, the approximation proposed in \cite{Dar_2013} was studied, but it is unfit in the case of Raman amplifiers. So, in order to find a suitable simplification of time domain non approximated integrals, the assumption of Gaussian pulses was examinated. This last analysis, along with local interaction approximation, lead to the direct analytical computation of one of the two integrals. The last integral can be computed numerically including border effects, or can be approximated by extending the domain of integration and gives an analytical expression similar to the one obtained after the approximation for high dispersion in \cite{Dar_2013}.
+In order to generalize the NLIN model, a coupled NLSE model was adopted, by redefining signal and interferent field. This formulation, when applied to the analysis of noise on a symbol, gives SPM and XPM coefficients of interaction which are very similar to the one in \cite{Dar_2013}. In order to compute the coefficient for XPM, the approximation proposed in \cite{Dar_2013} was studied, but it is unfit in the case of Raman amplifiers. So, in order to find a suitable simplification of time domain non approximated integrals, the assumption of Gaussian pulses was examinated. This last analysis, along with local interaction approximation, lead to the direct analytical computation of one of the two integrals. The last integral can be computed numerically including partial collisions at the borders, and different Raman gain and attenuation profiles.
 
 \printbibliography
 
