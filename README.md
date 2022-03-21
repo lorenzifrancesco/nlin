@@ -1,1 +1,1 @@
-## Collection of analytical results and lightweight simulation about the NLIN problem
+## Collection of analytical results and a lightweight simulation about the NLIN problem
