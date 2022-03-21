@@ -1,1 +1,1 @@
-# ANALYSIS OF THE NLIN PROBLEM IN OPTICAL WDM AMPLIFIERS
+## Collection of analytical results and lightweight simulation about the NLIN problem
