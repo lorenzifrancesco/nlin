@@ -1,0 +1,59 @@
+\documentclass[10pt, lettersize, journal, onecolumn]{IEEEtran}
+
+%\mathtoolsset{showonlyrefs = true} BETTER NOT
+%\usepackage[a4paper,width=185mm,top=20mm,bottom=20mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[backend=biber]{biblatex}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage[makeroom]{cancel}
+\usepackage{MnSymbol}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{amsmath, amsfonts, mathtools}
+\usepackage{array}
+\usepackage{ascii}
+\usepackage{colortbl}
+\usepackage{color}
+\usepackage{comment}
+\usepackage{csquotes}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{textcomp}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+
+\DeclareGraphicsExtensions{.png, .pdf, .pgf}
+\addbibresource{./bibliography.bib}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\graphicspath{{../results/}{../immagini/}}
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
+\setlength{\columnsep}{1cm}
+
+\title{Errata - Generalization of NLIN model for WDM systems considering fiber attenuation and Raman gain}
+\author{Francesco Lorenzi  \vspace{2pt}\\  {\footnotesize Dipartimento di Ingegneria dell'Informazione\\ \vspace{-5pt} Università degli studi di Padova}}
+
+\begin{document}
+	\maketitle
+	In equation (18) and (19) the pulse conjugation is wrong. From equation (16) and (17), it is possible to deduce the following 
+	\begin{equation}
+		S_{h, k, m} = \int_{z_0}^{L} dz f_A(z) \int_{-\infty}^{\infty} dt g^{(0)*}(z, t) g^{(0)}(z, t-hT) g^{(0)*}(z, t-kT)g^{(0)}(z, t-mT)
+	\end{equation}
+	for the SPM, and
+	\begin{equation}\label{eq:hkm}
+		X_{h, k, m} = \int_{z_0}^{L} dz f_B(z) \int_{-\infty}^{\infty} dt g^{(0)*}(z, t) g^{(0)}(z, t-hT) g^{(0)*}(z, t-kT -\beta_2 \Omega z)g^{(0)}(z, t-mT-\beta_2 \Omega z)
+	\end{equation}
+	for the XPM.
+	
+	\vspace{30pt}
+	In equation (20), the approximation is missing a power of two in the exponential, which reads
+	\begin{equation}\label{eq:papoulis}
+		g^{(0)}(z, t) \approx \sqrt{\frac{i}{2\pi \beta_2 z}} \exp\left[-\frac{it^2}{2 \beta_2 z}\right] \hat{g}\left(0, \frac{t}{\beta_2 z}\right)	
+	\end{equation}
+
+
+\end{document}
