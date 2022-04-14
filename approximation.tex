@@ -39,5 +39,56 @@
 
 \begin{document}
 	\maketitle
+	The approximation in equation (20) (corrected in errata, eq.(3)) relates the pulse time evolution with its spectrum:
+
+	\begin{equation}\label{eq:papoulis}
+		g^{(0)}(z, t) \approx \sqrt{\frac{i}{2\pi \beta_2 z}} \exp\left[-\frac{it^2}{2 \beta_2 z}\right] \hat{g}\left(0, \frac{t}{\beta_2 z}\right)	
+	\end{equation}
+	the computation of this approximation is done in Papoulis \cite{Papoulis_1994}.
+	To clarify the expression, the passages are derived below.
 	
+	We know that both coupled NLS equations have linear propagators $\mathbf{U}_A(z)$ and $\mathbf{U}_B(z)$. Both propagators have a chromatic dispersion part, whereas $\mathbf{U}_B(z)$ contains also a group velocity term. Focusing on dispersion, we use the symbol $\mathbf{U}(z)$ to represent the dispersion propagator
+	\begin{equation}
+		\mathbf{U}(z) = \exp\left[-i \dfrac{\beta_2}{2}z\dfrac{\partial^2}{\partial t^2} \right]
+	\end{equation}
+	which corresponds to the following frequency response 
+	\begin{equation}
+		\hat{\mathbf{U}}(z) = \exp\left[i \dfrac{\beta_2}{2}z\omega^2 \right].
+	\end{equation}
+	The last frequency response is a \textit{Quadratic Phase Filter} (QPF): an all-pass filter with quadratic phase relationship. 
+	Remember the Gaussian function Fourier transform and antitranform pair
+	\begin{equation}
+		\exp (-st^2)  \xrightarrow{\mathcal{F}}  \sqrt{\dfrac{\pi}{s}}\exp\left(-\dfrac{\omega^2}{4 s}\right).
+	\end{equation}
+	The multiplication by the propagator in the frequency domain corresponds to a convolution in the time domain by a Gaussian
+	\begin{equation}
+		g^{(0)}(z, t) = \sqrt{\dfrac{i}{2\pi \beta_2 z}} \int_{-\infty}^{\infty}  g(0, \tau) \exp\left[-i\dfrac{(t-\tau)^2}{2\beta_2 z}  \right] d\tau
+	\end{equation}
+	This particular convolution is a \textit{Fresnel transform}, of the form
+	\begin{equation}
+		g^{(0)}(z, t) = \sqrt{\dfrac{\alpha}{i\pi}} \int_{-\infty}^{\infty}  g(0, \tau) \exp\left[-i \alpha(t-\tau)^2 \right] d\tau
+	\end{equation}
+	with
+	\begin{equation}
+		\alpha = \dfrac{1}{2 \beta_2 z} 
+	\end{equation}
+	By expanding the square in the exponential, 
+	\begin{equation}
+		g^{(0)}(z, t) = \sqrt{\dfrac{i}{2\pi \beta_2 z}} \exp\left[-i\dfrac{t^2}{2\beta_2 z}\right] \int_{-\infty}^{\infty}  g(0, \tau) \exp\left[-i\dfrac{t^2- 2t \tau +\tau^2}{2\beta_2 z}  \right] d\tau
+	\end{equation}
+	we can select terms which 
+	
+	The approximation written in \ref{eq:papoulis} is possible when the following expression is 
+	
+	In terms of fiber length and dispersion length, for a Gaussian pulse we have
+	
+	
+	
+	A general theory for 
+	In presence of small dispersion, the approximation is accurate if the pulse shape is an eigenfunction of the chirp operator.
+	
+	
+	
+	
+	\printbibliography
 \end{document}
