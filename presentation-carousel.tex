@@ -277,7 +277,7 @@
     \begin{alignat}{2}
          & \begin{aligned}
                \frac{1}{2\pi} \int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z \omega^2 \right] \hat{g}(z, \omega - \Omega) \exp \left[i\omega t\right] d\omega =
-           \end{aligned}\label{eq:nlA_2}                                             \\
+           \end{aligned}\label{eq:nlA_2}                                               \\
          & \begin{aligned}
                =\frac{1}{2\pi} \int_{\mathbb{R}} \exp \left[-i\frac{\beta_2}{2}z (\omega-\Omega)^2 \right]  \hat{g}(z, \omega - \Omega) \exp \left[i(\omega -\Omega) t\right] \\
                \underbrace{\exp \left[i\Omega t\right]}_{\text{frequency shifting}} \underbrace{\exp \left[- i \beta_2 z \omega \Omega\right]}_{\text{time delay}} \underbrace{\exp\left[i\frac{\beta_2}{2}z \Omega^2 \right]}_{\text{constant}} d\omega
@@ -412,31 +412,31 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Impulsi gaussiani}
-    Si suppongano impulsi gaussiani: l'effetto della propagazione lineare è esprimibile in forma chiusa come
+    \frametitle{Gaussian pulses}
+    The effect of linear propagation on Gaussian input pulses can be written in this closed form expression
     \begin{equation}\label{eq:field}
         g(z, t) = \frac{U_0 \exp[\frac{i}{2} \arctan(D(z))]}{(1+D^2(z))^{1/4}} \exp\left[-\frac{t^2}{2T_0^2} \frac{1+iD(z)}{1+D^2(z)}\right]
     \end{equation}
-    dove $D(z) = z\beta_2 / T_0^2$.
+    where $D(z) = z\beta_2 / T_0^2$.
     \vspace{10pt}
 
-    Assumendo la normalizzazione dell'energia dell'impulso a 1, i parametri di ampiezza e larghezza devono soddisfare
+    Assuming a pulse energy normalized to 1, the parameters of amplitude and width must satisfy
     \begin{equation}\label{eq:norm}
         U_0^2T_0 \sqrt{\pi} = 1
     \end{equation}
-    Usando questa scrittura dell'impulso, si sostituisce nella scrittura del coefficiente di XPM.
+    Let us calculate the XPM coefficient for such pulse
 \end{frame}
 
 \begin{frame}
-    \frametitle{Sostituzione}
+    \frametitle{Gaussian pulses}
     \begin{equation}
         X_{0, m, m} = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}dt |g^{(0)}(z, t)|^2 |g^{(0)}(z, t- m T-\beta_2\Omega z)|^2
     \end{equation}
-    quindi considerando
+    and considering
     \begin{equation*}
         |g^{(0)}(z, t)|^2 = \dfrac{U_0^2}{(1+D^2(z))^{1/2}}\exp\left[-\dfrac{t^2}{T_0^2} \dfrac{1}{1+D^2(z)}\right]
     \end{equation*}
-    si ha la seguente espressione
+    we obtain
     \begin{align*}
         X_{0, m, m} & = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}dt
         \dfrac{U_0^4}{1+D^2(z)} \cdot                             \\ \cdot  &\exp\left[-\dfrac{1}{T_0^2(1+D^2(z))}
@@ -445,19 +445,19 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Completamento del quadrato}
-    Per comodità di scrittura, definiamo $s$ come
+    \frametitle{Square completion}
+    For ease of writing let us define $s$ as
     \begin{equation*}
         s := mT+\beta_2\Omega z
     \end{equation*}
-    allora è possibile riscrivere $\varphi$ come
+    so it is possible to express $\varphi$ as
     \begin{align*}
         \varphi & = 2t^2 - 2ts + s^2                                                \\
                 & = \left(\sqrt{2}t - \dfrac{s}{\sqrt{2}}\right)^2 + \dfrac{s^2}{2}
     \end{align*}
-    a questo punto cambiamo variabile di integrazione: $\eta := \sqrt{2}t - \frac{s}{\sqrt{2}}$
-    da cui $dz\,dt = dz\,d\eta \frac{1}{\sqrt{2}}$.
-    Perciò $\varphi = \eta^2 + \frac{s^2}{2}$, e si riscrive l'integrale come
+    finally, we use a change of variable $\eta := \sqrt{2}t - \frac{s}{\sqrt{2}}$
+    ,  $dz\,dt = dz\,d\eta \frac{1}{\sqrt{2}}$.
+    In conclusion $\varphi = \eta^2 + \frac{s^2}{2}$, and
     \begin{align*}
         X_{0, m, m} & = \int_{0}^{L}dz f_B(z) \int_{\mathbb{R}}\dfrac{d\eta}{\sqrt{2}}
         \dfrac{U_0^4}{1+D^2(z)} \cdot                                                  \\ \cdot  &\exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
@@ -465,45 +465,50 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Assunzione di interazione locale}
-    Possiamo ora assumere che l'integranda contribuisca all'integrale solo \emph{localmente}, ovvero approssimativamente per $z=z_m=-mT/\beta_2\Omega$. Questo significa che le funzioni $f_B(z)$ e $D(z)$ possono essere sostituite con le costanti $f_B(z_m)$ e $D(z_m)$, rispettivamente. Possiamo inoltre estendere l'integrazione spaziale a tutto $\mathbb{R}$, per ogni $m$ tale per cui $z_m \in [0, L]$.
-    Allora è possibile semplificare l'integrale:
+    \frametitle{Local interaction approximation}
+
+    The last step in the simplification procedure is the assumption of local interaction for $z=z_m=-mT/\beta_2\Omega$. This means that the function $D(z)$ can be substituted with constant $D(z_m)$. This is justified also by numerical simulations with usual Raman amplifiers parameters: they show that this approximation usually gives integrals with relative error $<1\%$.
+    We can also extend integration to $\mathbb{R}$, for every $m$ such that $z_m \in [0, L]$, if we assume to neglect partial collisions at the borders.
+    Than it is possible to simplify the integral
     \begin{align*}
         X_{0, m, m} & = f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}}\int_{\mathbb{R}}dz \int_{\mathbb{R}}d\eta
         \cdot                                                                                                             \\ \cdot  &\exp\left[-\dfrac{\eta^2}{T_0^2(1+D^2(z))} \right] \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
     \end{align*}
-    Restano così due integrali gaussiani si facile soluzione, infatti ricordando
+    The remaining equation contains two Gaussian integrals
     \begin{equation}
         \int_{\mathbb{R}}dt \exp\left[-\dfrac{t^2}{\alpha}\right] = \sqrt{\alpha \pi}
     \end{equation}
-    si ha la soluzione dell'integrale in $\eta$
+    integrating with respect to $\eta$ we obtain
     \begin{equation}
         f_B(z_m) \dfrac{U_0^4}{1+D^2(z_m)}  \dfrac{1}{\sqrt{2}}  {\color{blue}(T_0^2(1+D^2(z_m)))^{\frac{1}{2}}\sqrt{\pi}} \int_{\mathbb{R}}dz   \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z))} \right]
     \end{equation}
-
 \end{frame}
 
 \begin{frame}
-    \frametitle {Soluzione in interazione locale}
-    Infine, utilizzando $s$ come nuova variabile di integrazione
+    \frametitle{Local interaction solution}
+    and finally, expressing the dependency of $s$ from $z$,
     \begin{equation}
         s = mT+\beta_2\Omega z  \qquad dz = \dfrac{1}{\beta_2\Omega}ds
     \end{equation}
-    è possibile risolvere anche l'ultimo integrale, quindi si ha
+    and finally, expressing the dependency of $s$ from $z$,
+    \begin{equation}\label{THE_INTEGRAL}
+        X_{0, m, m} = \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L} dz f_B(z) \exp\left[-\dfrac{(mT+\beta_2\Omega z)^2}{2T_0^2(1+D^2(z_m))} \right]
+    \end{equation}
+    At this point, there is no possibility to find a general analytical solution to the integral. In fact, different Raman amplification schemes give different functions $f_B$, and the analysis must be done separately on each of them.
+    Still, let us explore the case in which there is \textit{perfect amplification}: the final result is interesting as the result is the same as the one given by the high dispersion approximation. In this hypotesis, $f_B \equiv 1$, and the coefficient is computed as
+    \begin{equation}\label{pa-first}
+        \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{0}^{L}dz \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z_m))} \right].
+    \end{equation}
+    which contains a truncated Gaussian integral. If we further assume that the contribution to the integral is negligible out of the range $[0, L]$, this integral has simple analytical solution.
+    Using $s$ as a new integration variable it is possible to solve as
     \begin{equation}
-        X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} \dfrac{U_0^4}{\cancel{1+D^2(z_m)}} \dfrac{1}{\cancel{\sqrt{2}}} \cancel{\sqrt{2}} T_0^2 \cancel{(1+D^2(z_m))} \pi = \dfrac{f_B(z_m)}{\beta_2 \Omega} U_0^4 T_0^2 \pi
+        \sqrt{\dfrac{\pi}{2}}\dfrac{U_0^4 T_0}{(1+D^2(z_m))^{\frac{1}{2}}} \int_{\mathbb{R}} \dfrac{ds}{\beta_2 \Omega} \exp\left[-\dfrac{s^2}{2T_0^2(1+D^2(z_m))} \right] = \dfrac{1}{\beta_2 \Omega} U_0^4 T_0^2 \pi.
     \end{equation}
-    Ora ricordiamo la \textit{condizione di normalizzazione} per l'energia degli impulsi (\ref{eq:norm}), sostituendo si ha una cancellazione dei parametri $U_0$ e $T_0$ dell'impulso
-    \begin{equation}\label{eq:solution}
-        X_{0, m, m} = \dfrac{f_B(z_m)}{\beta_2 \Omega} \underbracket{U_0^4 T_0^2 \pi}_{=1} = \dfrac{f_B(z_m)}{\beta_2 \Omega}
-    \end{equation}
-    Si noti come questa espressione sia molto simile con quella derivata tramite l'approssimazione di Papoulis \cite[eq. 10]{Dar_2013} (in questo caso abbiamo assunto $z_m \in [0, L]$).
-    Inoltre, mentre l'approssimazione originaria è valida solo a partire da una lunghezza di dispersione ($z_0 = \beta_2/T_0^2$), la (\ref{eq:solution}) è valida \textit{sempre} per impulsi gaussiani.
 \end{frame}
 
 
 \begin{frame}
-    \frametitle{Approssimazione di Papoulis}
+    \frametitle{Papoulis approximation}
     Quanto ottenuto nella (\ref{eq:solution}) fa sospettare che lo stesso risultato sarebbe stato ottenibile usando l'approssimazione in modo esatto. Infatti un aspetto fondamentale del ragionamento in \cite{Dar_2013} è che gli impulsi siano proporzionali e scalati rispetto ai loro \textit{spettri}. Questo per un impulso gaussiano è sempre vero.
 
     \vspace{20pt}
